@@ -3,7 +3,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
-\usepackage[margin=2.2cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage[margin=2.0cm,top=2.2cm,bottom=2.2cm]{geometry}
 \usepackage{xcolor}
 \usepackage{hyperref}
 \usepackage{booktabs}
@@ -14,6 +14,7 @@
 \usepackage{tcolorbox}
 \usepackage{listings}
 \usepackage{amsmath}
+\usepackage{array}
 
 % Corporate & Legal Tech Color Palette
 \definecolor{FoxitOrange}{HTML}{FF3700}
@@ -21,7 +22,7 @@
 \definecolor{SlateDark}{HTML}{0F172A}
 \definecolor{SlateGray}{HTML}{475569}
 \definecolor{SlateLight}{HTML}{F8FAFC}
-\definecolor{BorderGray}{HTML}{E2E8F0}
+\definecolor{BorderGray}{HTML}{CBD5E1}
 \definecolor{AlertRed}{HTML}{DC2626}
 \definecolor{SuccessGreen}{HTML}{16A34A}
 
@@ -40,61 +41,65 @@
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[L]{\small\textbf{\color{FoxitOrange}FOXIT} $\cdot$ Document Traceability Layer}
-\fancyhead[R]{\small\color{SlateGray}Preliminary Proposal $\cdot$ Leadership Review}
-\fancyfoot[L]{\small\color{SlateGray}Case EXP-2026-084-LIMA $\cdot$ Legal Tech Initiative}
-\fancyfoot[R]{\thepage}
+\fancyhead[R]{\small\color{SlateGray}Executive Proposal $\cdot$ Foxit Leadership Review}
+\fancyfoot[L]{\small\color{SlateGray}Case EXP-2026-084-LIMA $\cdot$ Legal Tech Modernization}
+\fancyfoot[R]{\thepage\ of 4}
 \renewcommand{\headrulewidth}{0.5pt}
 \renewcommand{\footrulewidth}{0.5pt}
 
 % Section Titles Styling
 \titleformat{\section}
-  {\Large\bfseries\color{SlateDark}}{\thesection}{1em}{}
-  [{\titlerule[0.8pt]}]
+  {\large\bfseries\color{SlateDark}}{\thesection}{0.8em}{}
+  [{\titlerule[0.6pt]}]
 
 \titleformat{\subsection}
-  {\large\bfseries\color{FoxitDarkOrange}}{\thesubsection}{1em}{}
+  {\normalsize\bfseries\color{FoxitDarkOrange}}{\thesubsection}{0.8em}{}
 
-\titleformat{\subsubsection}
-  {\normalsize\bfseries\color{SlateDark}}{\thesubsubsection}{1em}{}
+\titlespacing*{\section}{0pt}{10pt}{6pt}
+\titlespacing*{\subsection}{0pt}{8pt}{4pt}
 
-% Custom Callout Box
+% Custom Callout Boxes
 \newtcolorbox{executivebox}[1][]{
   colback=SlateLight,
   colframe=FoxitOrange,
   coltitle=white,
-  fonttitle=\bfseries,
+  fonttitle=\bfseries\small,
   title=#1,
-  arc=3mm,
-  boxrule=1.2pt,
+  arc=2.5mm,
+  boxrule=1.1pt,
   left=12pt,
   right=12pt,
-  top=10pt,
-  bottom=10pt
+  top=9pt,
+  bottom=9pt,
+  before=\vspace{4pt},
+  after=\vspace{6pt}
 }
 
 \newtcolorbox{alertbox}[1][]{
   colback=white,
   colframe=AlertRed,
-  fonttitle=\bfseries,
+  fonttitle=\bfseries\small,
   title=#1,
   arc=2mm,
   boxrule=1pt,
-  left=10pt, right=10pt, top=8pt, bottom=8pt
+  left=10pt, right=10pt, top=7pt, bottom=7pt,
+  before=\vspace{3pt}, after=\vspace{4pt}
 }
 
 \newtcolorbox{successbox}[1][]{
   colback=white,
   colframe=SuccessGreen,
-  fonttitle=\bfseries,
+  fonttitle=\bfseries\small,
   title=#1,
   arc=2mm,
   boxrule=1pt,
-  left=10pt, right=10pt, top=8pt, bottom=8pt
+  left=10pt, right=10pt, top=7pt, bottom=7pt,
+  before=\vspace{3pt}, after=\vspace{4pt}
 }
 
 % Code Listing Style
 \lstset{
-  basicstyle=\footnotesize\ttfamily,
+  basicstyle=\scriptsize\ttfamily,
   backgroundcolor=\color{SlateLight},
   frame=single,
   rulecolor=\color{BorderGray},
@@ -107,35 +112,35 @@
 \begin{document}
 
 % =========================================================================
-% TITLE & HEADER
+% PAGE 1: TITLE, METADATA & EXECUTIVE SUMMARY
 % =========================================================================
 \begin{center}
-    {\Huge \textbf{\color{SlateDark}FOXIT DOCUMENT TRACEABILITY LAYER}}\\[8pt]
-    {\Large \textbf{\color{FoxitOrange}Transforming Criminal Justice \& Public Sector Document Integrity}}\\[12pt]
-    \textbf{Preliminary Executive Proposal Prepared for Teddy and the Foxit Leadership Team}\\[4pt]
-    \small \color{SlateGray} Round 1 Evaluation $\cdot$ October 8, 2026 $\cdot$ Self-Serve Interactive Prototype \& Pitch Delivery
+    {\LARGE \textbf{\color{SlateDark}FOXIT DOCUMENT TRACEABILITY LAYER}}\\[5pt]
+    {\large \textbf{\color{FoxitOrange}Transforming Criminal Justice \& Public Sector Document Integrity}}\\[8pt]
+    {\textbf{\color{SlateDark}Preliminary Executive Proposal Prepared for Teddy and the Foxit Leadership Team}}\\[3pt]
+    {\small \color{SlateGray} Round 1 Evaluation $\cdot$ October 8, 2026 $\cdot$ Self-Serve Interactive Prototype \& Video Delivery}
 \end{center}
 
-\vspace{10pt}
-
 \begin{executivebox}[Executive Proposal Metadata]
-\begin{tabularx}{\textwidth}{@{}lXlX@{}}
-\textbf{Lead Architect:} & Gabriel SSGA & \textbf{Target System:} & Criminal Justice \& Municipal SaaS \\
-\textbf{Case Study:} & EXP-2026-084-LIMA & \textbf{Statutory Frame:} & Peruvian NCPP \& Leg. Decree 1735 \\
-\textbf{Live Demo UI:} & \href{https://garielessga.github.io/FOXIT-CAPA-RAZABILIDAD/}{\textbf{garielessga.github.io/demo}} & \textbf{Repository:} & \href{https://github.com/GarieleSSGA/FOXIT-CAPA-RAZABILIDAD}{\textbf{github.com/FOXIT-REPO}} \\
-\textbf{Official Video:} & 1080p Full HD MP4 (Zira Voiceover) & \textbf{Review Deadline:} & Thursday, Oct 8, 11:59 PM PST \\
-\end{tabularx}
+\noindent
+\begin{minipage}[t]{0.48\textwidth}\raggedright
+  \textbf{Lead Architect:} Gabriel SSGA\\[4pt]
+  \textbf{Case Study:} EXP-2026-084-LIMA (Aggravated Theft)\\[4pt]
+  \textbf{Legal Framework:} Peruvian NCPP \& Leg. Dec. 1735\\[4pt]
+  \textbf{Review Deadline:} Thursday, Oct 8, 11:59 PM PST
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\textwidth}\raggedright
+  \textbf{Target Domain:} Criminal Justice \& Municipal SaaS\\[4pt]
+  \textbf{Interactive Web Demo:} \href{https://garielessga.github.io/FOXIT-CAPA-RAZABILIDAD/}{\color{FoxitOrange}\textbf{garielessga.github.io/demo $\nearrow$}}\\[4pt]
+  \textbf{GitHub Repository:} \href{https://github.com/GarieleSSGA/FOXIT-CAPA-RAZABILIDAD}{\color{FoxitOrange}\textbf{github.com/GarieleSSGA/repo $\nearrow$}}\\[4pt]
+  \textbf{Official Video:} 1080p Full HD MP4 (US English Voice)
+\end{minipage}
 \end{executivebox}
 
-\vspace{10pt}
-
-% =========================================================================
-% 1. EXECUTIVE SUMMARY
-% =========================================================================
 \section{Executive Summary: The \$100M+ Public Sector Opportunity}
 
 Across judicial systems and municipal administrations worldwide, government operations continue to rely on physical paper files. In Latin America alone, paper dossiers represent a systemic vulnerability:
-\begin{itemize}[leftmargin=1.5em,itemsep=3pt]
+\begin{itemize}[leftmargin=1.5em,itemsep=2pt,topsep=2pt]
     \item \textbf{No Owner:} Once a folder leaves a police precinct, accountability is lost during inter-agency transit.
     \item \textbf{No Clock:} Peremptory constitutional deadlines (e.g., the 48-hour statutory flagrancy window) expire silently on desks.
     \item \textbf{No Memory:} Clerical errors lead officials to shred and reprint pages, leaving zero audit trail and causing catastrophic evidentiary dismissals at trial.
@@ -143,46 +148,63 @@ Across judicial systems and municipal administrations worldwide, government oper
 
 \textbf{The Opportunity for Foxit:} By integrating \textbf{Foxit Document Generation API}, \textbf{Foxit PDF Services API}, and a \textbf{SHA-256 Cryptographic Audit Chain}, we introduce an unalterable \emph{Traceability Layer}. Every document is born from certified templates, stamped with a cryptographic digest at second zero, and linked into an immutable blockchain-style audit log. This creates a scalable, high-margin SaaS model directly applicable to law enforcement, superior courts, municipal zoning, and public procurement.
 
+\section{The Core Challenge: Flagrancy 48-Hour Peremptory Countdown}
+Under Article 2(24)(f) of the Constitution and Legislative Decree 1735, in-flagrante police detentions expire strictly at \textbf{48.0 hours}. If police and prosecutors fail to substantiate the arrest with intact documentation within this timeframe, the judge must grant immediate \emph{Habeas Corpus} release. In current practice, lost police memos or disputed seizure bags account for over 35\% of procedural dismissals in flagrancy courts.
+
+\newpage
 % =========================================================================
-% 2. THE STATUTORY POLICE DOSSIER
+% PAGE 2: STATUTORY POLICE EVIDENCE DOSSIER
 % =========================================================================
 \section{Statutory Police Evidence Dossier}
 
 In direct fulfillment of Teddy's explicit criteria, our solution models the complete evidentiary dossier produced during an in-flagrante arrest at the \emph{Alfonso Ugarte Police Station (Lima)}. Table~\ref{tab:dossier} specifies the six concrete police instruments and how Foxit hardens each stage.
 
+\vspace{4pt}
+
 \begin{table}[htbp]
 \centering
 \small
-\begin{tabularx}{\textwidth}{p{0.5cm} p{3.8cm} p{2.2cm} p{4.2cm} X}
+\begin{tabularx}{\textwidth}{@{}c >{\raggedright\arraybackslash}p{3.4cm} >{\raggedright\arraybackslash}p{2.3cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X@{}}
 \toprule
-\textbf{\#} & \textbf{Official Police Instrument} & \textbf{Statutory Basis} & \textbf{Traditional Paper Vulnerability} & \textbf{Foxit Traceability Shield} \\
+\textbf{\#} & \textbf{Police Instrument} & \textbf{Statutory Basis} & \textbf{Traditional Paper Vulnerability} & \textbf{Foxit Traceability Shield} \\
 \midrule
 \textbf{1} & \textbf{In-Flagrante Intervention Record} & Art. 259 NCPP & Drafted by hand in precinct; lacks verifiable timestamp; prone to backdating. & \textbf{Foxit DocGen API} creates PDF from template and stamps SHA-256 (\texttt{cdcd7e...}) at birth. \\
 \addlinespace
-\textbf{2} & \textbf{Notice of Arrest \& Constitutional Rights} & Art. 71 NCPP & Suspects claim rights were never read; physical receipts lack tamper-evident proof. & Issued digitally; timestamped to officer's CIP credentials; registered in audit log. \\
+\textbf{2} & \textbf{Notice of Arrest \& Legal Rights} & Art. 71 NCPP & Suspects claim rights were never read; physical receipts lack tamper-evident proof. & Issued digitally; timestamped to officer's CIP credentials; registered in audit log. \\
 \addlinespace
 \textbf{3} & \textbf{Personal Search \& Seizure Record} & Art. 210 NCPP & Discrepancies in seized items (cash, cell phones) invalidate evidence in preliminary hearings. & Itemized inventory embedded in immutable PDF; bound to parent arrest record. \\
 \addlinespace
-\textbf{4} & \textbf{Chain of Custody Form (A-6 Label)} & Art. 220, 222 NCPP & Handwritten labels taped to bags tear; time discrepancies force evidence exclusion. & \textbf{Foxit PDF Services} generates tamper-evident label sharing the parent cryptographic hash. \\
+\textbf{4} & \textbf{Chain of Custody Form (A-6 Label)} & Art. 220, 222 NCPP & Handwritten labels taped to bags tear; time discrepancies force evidence exclusion. & \textbf{Foxit PDF Services} generates tamper-evident label sharing parent cryptographic hash. \\
 \addlinespace
 \textbf{5} & \textbf{Suspect Deposition Statement} & Art. 86--88 NCPP & Defense counsel disputes statement integrity, claiming ex-post alterations. & Sealed version-controlled document; attorney credentials validated; revisions logged. \\
 \addlinespace
-\textbf{6} & \textbf{Final Police Report (Atestado N° 042-2026)} & Art. 331 NCPP & Transported by motorcycle courier; 5-hour delays in mailrooms leave files unowned. & Initiates \textbf{Transfer TRF-0001}; active custodian assigned until prosecutor signs receipt. \\
+\textbf{6} & \textbf{Final Police Report (Atestado N° 042)} & Art. 331 NCPP & Transported by motorcycle courier; 5-hour delays in mailrooms leave files unowned. & Initiates \textbf{Transfer TRF-0001}; active custodian assigned until prosecutor signs receipt. \\
 \bottomrule
 \end{tabularx}
 \caption{The Six Official Police Instruments and Their Hardening with Foxit APIs.}
 \label{tab:dossier}
 \end{table}
 
+\vspace{6pt}
+
+\subsection{Document Progression from Precinct to Trial Court}
+\begin{itemize}[leftmargin=1.5em,itemsep=3pt]
+    \item \textbf{Stage 1: Origin at Precinct (T0):} The officer inputs intervention variables. Foxit Document Generation generates the sealed PDF (\texttt{36.9 KB}) and computes its SHA-256 hash. The hash becomes the filename in the Vault.
+    \item \textbf{Stage 2: Transit to Prosecutor (T0 + 8h):} Police initiate Transfer TRF-0001. A digital chain of custody warning remains active until the prosecutor acknowledges receipt with verified hash matching.
+    \item \textbf{Stage 3: Subsanación Without Destruction (T0 + 34h):} When a clerical typo occurs in the license plate, rather than burning the sheet, the prosecutor issues Disposition V1 and police issue Record V2. Both versions remain intact in the Vault.
+    \item \textbf{Stage 4: Judicial Legal Control (T0 + 48h):} The judge opens the digital dossier. Within 30 milliseconds, the browser's native Web Crypto API verifies the mathematical authenticity of all records.
+\end{itemize}
+
+\newpage
 % =========================================================================
-% 3. THE PROCEDURAL FOREST: PARALLEL COMPARISON
+% PAGE 3: THE PROCEDURAL FOREST (TWO PARALLEL TREES SIDE-BY-SIDE)
 % =========================================================================
 \section{Procedural Forest: Two Parallel Architectures}
 
 Rather than using hiding tabs, our interactive platform renders both procedural trees \textbf{simultaneously side-by-side}, contrasting the paper failure mode with Foxit's cryptographic guarantee:
 
 \begin{alertbox}[Tree 1: The Traditional Paper Regime (7 Points of Failure)]
-\begin{enumerate}[leftmargin=1.5em,itemsep=2pt]
+\begin{enumerate}[leftmargin=1.5em,itemsep=3pt]
     \item \textbf{Precinct Record:} Paper drafted in ballpoint pen; zero cryptographic binding; vulnerable to page removal.
     \item \textbf{Seizure \& Custody:} Adhesive labels on evidence bags tear; no cross-referencing to parent files.
     \item \textbf{Transit Window:} File transported on motorcycle courier; no active digital custody; delays go unmonitored.
@@ -193,8 +215,10 @@ Rather than using hiding tabs, our interactive platform renders both procedural 
 \end{enumerate}
 \end{alertbox}
 
+\vspace{4pt}
+
 \begin{successbox}[Tree 2: The Foxit Traceability Shield (100\% Inviolable)]
-\begin{enumerate}[leftmargin=1.5em,itemsep=2pt]
+\begin{enumerate}[leftmargin=1.5em,itemsep=3pt]
     \item \textbf{Foxit DocGen at Birth:} Document generated via template; SHA-256 hash sealed into Vault at second zero.
     \item \textbf{Cryptographic Custody:} Physical bags and digital forensic reports share parent cryptographic identifier.
     \item \textbf{Transfer TRF-0001:} System logs open custody transfer with mandatory digital sign-off by prosecutor.
@@ -205,14 +229,15 @@ Rather than using hiding tabs, our interactive platform renders both procedural 
 \end{enumerate}
 \end{successbox}
 
+\newpage
 % =========================================================================
-% 4. TECHNICAL ARCHITECTURE & FOXIT API INTEGRATION
+% PAGE 4: TECHNICAL ARCHITECTURE, ROADMAP & DELIVERABLES
 % =========================================================================
 \section{Technical Architecture \& Verified Foxit Execution}
 
 \subsection{Document Generation \& PDF Services API Benchmark}
 All integration endpoints were executed live against active developer credentials at \texttt{na1.fusion.foxit.com}:
-\begin{itemize}[leftmargin=1.5em,itemsep=3pt]
+\begin{itemize}[leftmargin=1.5em,itemsep=1pt,topsep=1pt,parsep=0pt]
     \item \textbf{Foxit Document Generation API:} Invocations to \texttt{GenerateDocumentBase64} completed with \textbf{HTTP 200 OK} in \textbf{1,612 ms}, generating an official \texttt{36.9 KB} PDF record.
     \item \textbf{Foxit PDF Services API:} Upload, Word-to-PDF conversion, status polling, and byte retrieval functioned seamlessly.
     \item \textbf{Foxit eSign Architecture \& Ethical Transparency:} As established in Foxit's developer portal, eSign operates under an independent corporate license. Rather than faking synthetic signatures, our engine explicitly outputs \texttt{status: UNAVAILABLE (Requires Enterprise eSign Plan)}. The system schema and hooks are pre-configured to activate immediately upon commercial subscription.
@@ -220,50 +245,41 @@ All integration endpoints were executed live against active developer credential
 
 \subsection{Cryptographic Vault \& Web Crypto Verification}
 In the document vault, \textbf{the SHA-256 hash is the file name itself}:
-\begin{lstlisting}[language=bash]
-# Byte-for-byte SHA-256 verification
+\begin{lstlisting}[language=bash,aboveskip=2pt,belowskip=2pt]
+# Byte-for-byte SHA-256 verification directly from terminal or browser Web Crypto API
 sha256sum site/vault/cdcd7e6bca653514e3624b4756892b8ac3bcfb541afa36977ef218d509c00218.pdf
 # Result: cdcd7e6bca653514e3624b4756892b8ac3bcfb541afa36977ef218d509c00218  (100% MATCH)
 \end{lstlisting}
+Every client browser can verify document integrity in under 30 milliseconds using the native browser \texttt{crypto.subtle.digest('SHA-256', buffer)}, eliminating reliance on external verification servers.
 
-Every client browser can verify document integrity in under 30 milliseconds using the native browser \texttt{window.crypto.subtle.digest('SHA-256', arrayBuffer)}, eliminating reliance on third-party verification servers.
-
-% =========================================================================
-% 5. ROADMAP, SCALABILITY & BUDGET FEASIBILITY
-% =========================================================================
 \section{Scalability Roadmap \& Budget Feasibility}
 
-\begin{tabularx}{\textwidth}{@{}l p{4.5cm} X@{}}
+\begin{tabularx}{\textwidth}{@{}l >{\raggedright\arraybackslash}p{3.8cm} >{\raggedright\arraybackslash}X@{}}
 \toprule
 \textbf{Phase} & \textbf{Domain Target} & \textbf{High-Value Impact \& Foxit API Utilization} \\
 \midrule
-\textbf{Phase 1 (Current)} & Criminal Flagrancy Police Units & Standardizing the 6 police instruments and 48-hour flagrancy tracking in Lima police divisions. \\
-\addlinespace
-\textbf{Phase 2} & Municipal Licensing \& Zoning & Hardening municipal construction permits, commercial inspections, and property registrations. (Zero lost files in city halls). \\
-\addlinespace
-\textbf{Phase 3} & Public Procurement \& Bidding & Cryptographically sealing vendor proposals and public tender dossiers at closing time to eradicate bid manipulation. \\
-\addlinespace
-\textbf{Phase 4} & Inter-Agency Judiciary SaaS & Enterprise deployment across Superior Courts and Regional Prosecutor Offices. \\
+\textbf{Phase 1 (Current)} & Criminal Flagrancy Units & Standardizing the 6 police instruments and 48-hour tracking in Lima precincts. \\
+\addlinespace[2pt]
+\textbf{Phase 2} & Municipal Licensing & Hardening municipal construction permits and inspections. (Zero lost files). \\
+\addlinespace[2pt]
+\textbf{Phase 3} & Public Procurement & Cryptographically sealing vendor bids at closing time to stop manipulation. \\
+\addlinespace[2pt]
+\textbf{Phase 4} & Inter-Agency Judiciary & Enterprise deployment across Superior Courts and Regional Prosecutor Offices. \\
 \bottomrule
 \end{tabularx}
 
 \subsection{Budget Feasibility}
 The preliminary development and deployment are fully viable within the proposed seed program budget. Utilizing serverless architectures for hash chaining combined with Foxit's high-speed API processing yields an estimated operational cost of less than \textbf{\$0.015 per procedural dossier}, providing exceptional gross margins for public sector commercialization.
 
-% =========================================================================
-% 6. DELIVERABLES & ACCESS LINKS
-% =========================================================================
 \section{Project Deliverables \& Access Links}
-
-\begin{itemize}[leftmargin=1.5em,itemsep=4pt]
-    \item \textbf{Live Interactive Self-Serve Demo:} \href{https://garielessga.github.io/FOXIT-CAPA-RAZABILIDAD/}{\url{https://garielessga.github.io/FOXIT-CAPA-RAZABILIDAD/}}
-    \item \textbf{Complete Open Source Repository:} \href{https://github.com/GarieleSSGA/FOXIT-CAPA-RAZABILIDAD}{\url{https://github.com/GarieleSSGA/FOXIT-CAPA-RAZABILIDAD}}
-    \item \textbf{Official Pitch Video (1080p Full HD):} \texttt{site/video\_pitch\_foxit\_leadership.mp4} (Embedded directly in the live web application header, with clear English voiceover narration and real UI captures).
+\begin{itemize}[leftmargin=1.5em,itemsep=1.5pt,topsep=1pt,parsep=0pt]
+    \item \textbf{Live Interactive Self-Serve Demo:} \href{https://garielessga.github.io/FOXIT-CAPA-RAZABILIDAD/}{\color{FoxitOrange}\url{https://garielessga.github.io/FOXIT-CAPA-RAZABILIDAD/}}
+    \item \textbf{Complete Open Source Repository:} \href{https://github.com/GarieleSSGA/FOXIT-CAPA-RAZABILIDAD}{\color{FoxitOrange}\url{https://github.com/GarieleSSGA/FOXIT-CAPA-RAZABILIDAD}}
+    \item \textbf{Official Pitch Video (1080p Full HD):} \texttt{site/video\_pitch\_foxit\_leadership.mp4} (Embedded in web demo header, with clear English voiceover narration and real UI captures).
     \item \textbf{Executive Markdown Pitch:} \texttt{PITCH\_LEADERSHIP\_FOXIT.md} in the repository root.
 \end{itemize}
 
-\vspace{15pt}
-
+\vspace{5pt}
 \begin{center}
 \small \textbf{\color{FoxitOrange}Foxit is the future of trustworthy document intelligence and governance transparency.}
 \end{center}
