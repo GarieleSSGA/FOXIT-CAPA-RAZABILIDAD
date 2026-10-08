@@ -3,343 +3,405 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FOXIT — Capa de Trazabilidad Documental</title>
+<title>FOXIT — El expediente que nadie tuvo: simulación del problema y la solución</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖️</text></svg>">
 <style>
   :root {
-    --bg: #0B0F19; --panel: #131A2A; --line: #1E293B; --line2: #334155;
-    --text: #E2E8F0; --dim: #94A3B8; --accent: #FF3700;
-    --ok: #4ADE80; --warn: #FBBF24; --bad: #F87171; --info: #38BDF8;
+    --ink: #1a1a1a; --muted: #5b5b5b; --line: #e5e0d8; --paper: #ffffff;
+    --cream: #faf7f1; --accent: #c2410c; --accent-soft: #fff3ea;
+    --foxit: #ff3700; --ok: #15803d; --ok-bg: #f0fdf4; --bad: #b91c1c; --bad-bg: #fef2f2;
+    --warn-bg: #fffbeb; --info: #1d4ed8; --info-bg: #eff6ff;
   }
   * { box-sizing: border-box; }
   body {
-    margin: 0; background: var(--bg); color: var(--text);
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 17px; line-height: 1.7;
+  }
+  .sans, button, .pill, .step-meta, .clock, footer {
     font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-    font-size: 14px; line-height: 1.6;
   }
-  header {
-    border-bottom: 1px solid var(--line); padding: 18px 24px;
-    display: flex; align-items: center; justify-content: space-between;
-    flex-wrap: wrap; gap: 12px;
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+  header.hero { padding: 72px 0 40px; text-align: center; }
+  .kicker {
+    display: inline-block; font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--accent); font-weight: 700; margin-bottom: 16px;
   }
-  h1 { font-size: 17px; margin: 0; font-weight: 650; letter-spacing: -0.01em; }
-  h1 span { color: var(--accent); }
-  .sub { color: var(--dim); font-size: 12px; margin-top: 2px; }
-  main {
-    display: grid; grid-template-columns: 1fr 1.25fr 1fr; gap: 16px;
-    padding: 16px 24px 32px; max-width: 1600px; margin: 0 auto;
+  h1 { font-size: 42px; line-height: 1.2; margin: 0 0 18px; font-weight: 700; letter-spacing: -0.01em; }
+  h1 em { font-style: italic; color: var(--accent); }
+  .lede { font-size: 20px; color: var(--muted); max-width: 640px; margin: 0 auto 30px; line-height: 1.6; }
+  section { padding: 44px 0; border-top: 1px solid var(--line); }
+  section:first-of-type { border-top: 0; }
+  h2 { font-size: 30px; margin: 0 0 8px; line-height: 1.3; }
+  h2 .n { color: var(--accent); }
+  .deck { color: var(--muted); font-size: 18px; margin: 0 0 28px; }
+  p { margin: 0 0 16px; }
+
+  /* ---- simulador ---- */
+  .sim { background: var(--cream); border: 1px solid var(--line); border-radius: 14px; padding: 28px; margin: 8px 0 0; }
+  .sim-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
+  .clock {
+    font-size: 15px; font-weight: 700; background: #1a1a1a; color: #fff;
+    padding: 8px 16px; border-radius: 999px; font-variant-numeric: tabular-nums;
   }
-  @media (max-width: 1100px) { main { grid-template-columns: 1fr; } }
-  .card {
-    background: var(--panel); border: 1px solid var(--line);
-    border-radius: 8px; padding: 16px;
+  .clock.danger { background: var(--bad); animation: pulse 1.2s infinite; }
+  @keyframes pulse { 50% { opacity: .75; } }
+  .controls { display: flex; gap: 8px; }
+  button {
+    border: 1px solid #d6d0c4; background: #fff; color: var(--ink);
+    padding: 9px 18px; border-radius: 999px; cursor: pointer; font-size: 14px; font-weight: 600;
   }
-  .card h2 {
-    font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em;
-    color: var(--dim); margin: 0 0 12px; font-weight: 600;
+  button:hover { border-color: var(--ink); }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  button.primary:hover { filter: brightness(1.08); }
+  button:disabled { opacity: .4; cursor: default; }
+  .progressbar { height: 6px; background: #e8e2d6; border-radius: 3px; margin: 4px 0 22px; overflow: hidden; }
+  .progressbar i { display: block; height: 100%; background: var(--accent); width: 0; transition: width .6s ease; border-radius: 3px; }
+  .stage {
+    background: #fff; border: 1px solid var(--line); border-radius: 10px;
+    padding: 24px; min-height: 240px;
   }
-  .kv { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
-  .kv:last-child { border-bottom: 0; }
-  .kv span:first-child { color: var(--dim); flex-shrink: 0; }
-  .kv span:last-child { text-align: right; word-break: break-word; }
-  .mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 11px; }
-  .pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
-  .pill-ok { background: #052e16; color: var(--ok); border: 1px solid #14532d; }
-  .pill-warn { background: #422006; color: var(--warn); border: 1px solid #78350f; }
-  .pill-bad { background: #450a0a; color: var(--bad); border: 1px solid #7f1d1d; }
-  .notice { border-radius: 6px; padding: 11px 13px; font-size: 12px; line-height: 1.55; margin-bottom: 12px; }
-  .notice-warn { background: #1e1508; border: 1px solid #78350f; border-left: 3px solid var(--warn); color: #e2d5b3; }
-  .notice-ok { background: #0a1f10; border: 1px solid #14532d; border-left: 3px solid var(--ok); color: #bbf7d0; }
-  .notice-bad { background: #1f0d0d; border: 1px solid #7f1d1d; border-left: 3px solid var(--bad); color: #fecaca; }
-  .tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
-  .tab {
-    background: var(--bg); border: 1px solid var(--line2); color: var(--dim);
-    padding: 7px 11px; border-radius: 6px; cursor: pointer; font-size: 12px;
-    font-family: inherit; text-align: left; line-height: 1.35;
+  .stage .step-meta { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .stage h3 { font-size: 24px; margin: 0 0 10px; line-height: 1.35; }
+  .stage p { font-size: 16px; color: #333; margin: 0 0 12px; }
+  .stage .fallo {
+    background: var(--bad-bg); border-left: 3px solid var(--bad);
+    padding: 10px 14px; font-size: 14px; border-radius: 0 8px 8px 0; margin-top: 14px;
   }
-  .tab:hover { border-color: var(--info); color: var(--text); }
-  .tab.active { border-color: var(--accent); color: var(--text); background: #1f1005; }
-  .tab b { display: block; font-weight: 600; }
-  .tab i { font-style: normal; font-size: 11px; color: var(--dim); }
-  iframe { width: 100%; height: 520px; border: 1px solid var(--line); border-radius: 6px; background: #fff; display: block; }
-  .metabar { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
-  .hash { color: var(--info); background: var(--bg); padding: 6px 8px; border-radius: 4px; border: 1px solid var(--line); word-break: break-all; display: block; margin-top: 4px; }
-  button.act {
-    background: var(--accent); color: #fff; border: 0; padding: 9px 14px;
-    border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 13px;
-    font-family: inherit; margin-top: 10px; width: 100%;
+  .stage .bien {
+    background: var(--ok-bg); border-left: 3px solid var(--ok);
+    padding: 10px 14px; font-size: 14px; border-radius: 0 8px 8px 0; margin-top: 14px;
   }
-  button.act:hover { filter: brightness(1.12); }
-  button.act.sec { background: var(--bg); border: 1px solid var(--line2); color: var(--text); }
-  .tl { position: relative; padding-left: 20px; max-height: 460px; overflow-y: auto; }
-  .tl::before { content: ''; position: absolute; left: 5px; top: 4px; bottom: 4px; width: 1px; background: var(--line2); }
-  .ev { position: relative; padding-bottom: 14px; font-size: 12px; }
-  .ev::before { content: ''; position: absolute; left: -18px; top: 5px; width: 7px; height: 7px; border-radius: 50%; background: var(--line2); }
-  .ev.tamper::before { background: var(--bad); box-shadow: 0 0 0 3px #450a0a; }
-  .ev.ok::before { background: var(--ok); }
-  .ev-t { color: var(--dim); font-size: 11px; }
-  .ev-ti { font-weight: 600; margin: 1px 0; }
-  .ev-d { color: var(--dim); font-size: 11px; word-break: break-word; }
-  .res { margin-top: 12px; padding: 11px 13px; border-radius: 6px; font-size: 12px; display: none; line-height: 1.6; }
-  .res.show { display: block; }
-  .res.ok { background: #0a1f10; border: 1px solid #14532d; color: #bbf7d0; }
-  .res.bad { background: #1f0d0d; border: 1px solid #7f1d1d; color: #fecaca; }
-  .res h3 { margin: 0 0 7px; font-size: 13px; }
-  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
-  footer { border-top: 1px solid var(--line); padding: 16px 24px; color: var(--dim); font-size: 11px; text-align: center; }
+  .stage.final { border: 2px solid var(--bad); background: var(--bad-bg); }
+  .stage.final h3 { color: var(--bad); }
+  .steps { display: flex; gap: 6px; margin-top: 18px; flex-wrap: wrap; }
+  .steps span {
+    font-size: 11px; padding: 4px 10px; border-radius: 999px;
+    background: #eee9dd; color: var(--muted);
+  }
+  .steps span.done { background: #1a1a1a; color: #fff; }
+  .steps span.now { background: var(--accent); color: #fff; }
+
+  /* ---- documentos ---- */
+  .doc {
+    border: 1px solid var(--line); border-radius: 12px; padding: 20px 22px;
+    margin-bottom: 14px; background: #fff;
+  }
+  .doc h3 { font-size: 19px; margin: 0 0 4px; }
+  .doc .who { font-size: 13px; color: var(--muted); margin-bottom: 10px; }
+  .hash {
+    font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12px;
+    background: var(--cream); border: 1px solid var(--line); border-radius: 6px;
+    padding: 8px 10px; word-break: break-all; display: block; margin: 8px 0;
+  }
+  .pill {
+    display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 10px;
+    border-radius: 999px; margin-right: 6px;
+  }
+  .pill.ok { background: var(--ok-bg); color: var(--ok); border: 1px solid #bbf7d0; }
+  .pill.warn { background: var(--warn-bg); color: #92400e; border: 1px solid #fde68a; }
+  .pill.bad { background: var(--bad-bg); color: var(--bad); border: 1px solid #fecaca; }
+  .pill.info { background: var(--info-bg); color: var(--info); border: 1px solid #bfdbfe; }
+  .doc-actions { margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .doc-actions a, .doc-actions button {
+    font-size: 13px; text-decoration: none; margin: 0; width: auto;
+  }
+  .doc-actions a {
+    border: 1px solid #d6d0c4; padding: 9px 18px; border-radius: 999px;
+    color: var(--ink); font-weight: 600; background: #fff;
+  }
+  .doc-actions a:hover { border-color: var(--ink); }
+  .mini { font-size: 13px; color: var(--muted); margin-top: 10px; }
+  #resOut {
+    display: none; border-radius: 10px; padding: 16px 18px; font-size: 14px;
+    margin-top: 14px; line-height: 1.6;
+  }
+  #resOut.show { display: block; }
+  #resOut.ok { background: var(--ok-bg); border: 1px solid #bbf7d0; color: #14532d; }
+  #resOut.bad { background: var(--bad-bg); border: 1px solid #fecaca; color: #7f1d1d; }
+
+  .quote {
+    border-left: 3px solid var(--accent); padding: 4px 0 4px 18px;
+    font-style: italic; font-size: 19px; margin: 26px 0; color: #333;
+  }
+  .verdict {
+    background: #1a1a1a; color: #fff; border-radius: 14px; padding: 30px;
+    margin: 26px 0 0;
+  }
+  .verdict h3 { margin: 0 0 10px; font-size: 22px; }
+  .verdict p { color: #d4d4d4; font-size: 16px; margin: 0 0 12px; }
+  .verdict strong { color: #fff; }
+  footer { border-top: 1px solid var(--line); padding: 26px 0 60px; color: var(--muted); font-size: 12px; line-height: 1.8; }
+  footer code { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 11px; background: var(--cream); border: 1px solid var(--line); padding: 1px 5px; border-radius: 3px; }
+  a { color: var(--accent); }
+  @media (max-width: 640px) { h1 { font-size: 30px; } .sim { padding: 18px; } }
 </style>
 </head>
 <body>
 
-<header>
-  <div>
-    <h1>FOXIT <span>—</span> Capa de Trazabilidad Documental</h1>
-    <div class="sub">Proceso penal peruano · Integridad, versionado y custodia verificables</div>
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker sans">FOXIT · Caso penal peruano · Simulación en dos actos</div>
+    <h1>El expediente que <em>nadie tuvo</em></h1>
+    <p class="lede">
+      Un detenido en flagrancia. Un acta en papel. Un plazo de 48 horas.
+      Esta es la historia de cómo el proceso se paralizó, la persona salió libre
+      y nadie supo decir quién fue responsable. Y de cómo se evita.
+    </p>
   </div>
-  <div id="accessPills"></div>
 </header>
 
-<main>
-  <section class="card">
-    <h2>Caso</h2>
-    <div id="caseBox">Cargando…</div>
-    <h2 style="margin-top:18px">Acceso a Foxit</h2>
-    <div id="foxitBox">Cargando…</div>
-    <h2 style="margin-top:18px">Custodia</h2>
-    <div id="custodyBox">Cargando…</div>
-  </section>
+<div class="wrap">
 
-  <section class="card">
-    <h2>Documento sellado</h2>
-    <div class="tabs" id="tabs"></div>
-    <iframe id="pdfFrame" title="Documento sellado"></iframe>
-    <div class="metabar">
-      <span style="font-size:11px;color:var(--dim)">SHA-256 — el hash es el nombre del archivo</span>
-      <code class="hash mono" id="hashOut">…</code>
-      <div style="margin-top:8px"><span id="sigOut"></span></div>
-      <button class="act" id="btnVerify">Verificar integridad en el navegador</button>
-      <button class="act sec" id="btnAll">Verificar los 3 documentos</button>
-      <div class="res" id="resOut"></div>
+<!-- ================= ACTO 1 ================= -->
+<section id="acto1">
+  <h2><span class="n">Acto 1.</span> El problema, paso a paso</h2>
+  <p class="deck">Lo que pasa hoy, en papel. Presiona <strong>▶ Simular</strong> y mira el reloj.</p>
+
+  <div class="sim sans">
+    <div class="sim-head">
+      <div class="clock" id="clock">⏳ 48.0 h restantes</div>
+      <div class="controls">
+        <button id="btnPlay" class="primary">▶ Simular</button>
+        <button id="btnPrev">← Anterior</button>
+        <button id="btnNext">Siguiente →</button>
+      </div>
     </div>
-  </section>
+    <div class="progressbar"><i id="bar"></i></div>
+    <div class="stage" id="stage"></div>
+    <div class="steps" id="dots"></div>
+  </div>
+</section>
 
-  <section class="card">
-    <h2>Cadena de auditoría</h2>
-    <div id="chainOut">Cargando…</div>
-    <h2 style="margin-top:18px">Registro de solo agregado</h2>
-    <div class="tl" id="timeline">Cargando…</div>
-  </section>
-</main>
+<!-- ================= ACTO 2 ================= -->
+<section id="acto2">
+  <h2><span class="n">Acto 2.</span> El mismo caso, con la capa Foxit</h2>
+  <p class="deck">Los mismos hechos. La diferencia: cada documento queda sellado, cada
+  entrega queda con dueño y hora, y cualquiera puede verificarlo.</p>
 
-<footer>
-  Verificación ejecutable en el navegador con Web Crypto SHA-256. Sin servidor: el hash registrado
-  es el nombre del archivo, así que la comprobación no depende de la base de datos.
+  <div id="docsOut"><p>Cargando documentos…</p></div>
+
+  <h2 style="font-size:24px; margin-top:36px">Verifícalo tú mismo</h2>
+  <p>
+    No tienes que creernos. Tu navegador descarga cada PDF, calcula su SHA-256
+    y lo compara contra el hash que da nombre al archivo. Sin servidor, sin permiso, sin cuenta.
+  </p>
+  <div class="doc-actions sans">
+    <button class="primary" id="btnVerify" style="background:var(--accent);border-color:var(--accent);color:#fff">Verificar los 3 documentos</button>
+  </div>
+  <div id="resOut" class="sans"></div>
+
+  <div class="verdict sans" id="custodyOut" style="margin-top:28px"><p>Cargando custodia…</p></div>
+</section>
+
+<!-- ================= ACCESO ================= -->
+<section id="acceso">
+  <h2><span class="n">Nota honesta</span> sobre Foxit</h2>
+  <p class="deck">Qué parte es real, qué parte falta, y por qué lo decimos.</p>
+  <div id="accessOut"><p>Cargando…</p></div>
+  <p class="mini sans" style="margin-top:16px">
+    Los documentos de esta página fueron generados de verdad con
+    <strong>Foxit Document Generation</strong> desde plantillas
+    <span style="font-family:ui-monospace,monospace;font-size:12px">.docx</span>,
+    y procesados con <strong>Foxit PDF Services</strong>
+    (hosts <span style="font-family:ui-monospace,monospace;font-size:12px">na1.fusion.foxit.com</span> verificados por DNS).
+    La firma electrónica requiere una cuenta aparte del portal de eSign que esta cuenta no tiene:
+    el endpoint responde <span style="font-family:ui-monospace,monospace;font-size:12px">invalid_client</span>.
+    Por eso ningún documento de esta demo afirma estar firmado.
+  </p>
+</section>
+
+</div>
+
+<footer class="sans">
+  <div class="wrap">
+    Verificación reproducible sin este sitio: <code>sha256sum site/vault/*.pdf</code> ·
+    Hashes publicados en <code>site/MANIFEST.json</code> ·
+    Caso ficticio con datos inventados. Ningún documento afirma un plazo, artículo o endpoint sin verificar.
+  </div>
 </footer>
 
 <script>
-const DOC_LABELS = {
-  'ACTA_INTERVENCION': ['Acta Policial V1', 'Documento original de la intervención'],
-  'DISPOSICION_FISCAL': ['Disposición Fiscal', 'Observación del fiscal que ordena la subsanación'],
-  'ACTA_INTERVENCION_SUBSANADA': ['Acta Subsanada V2', 'Corrige la placa. La V1 queda intacta.']
-};
+/* ============ ACTO 1: el problema ============ */
+const PROBLEMA = [
+  { t: "Lunes 01:15 — La intervención",
+    h: 48.0,
+    html: `<p>La policía detiene a una persona en flagrancia en Lima. El oficial levanta el <strong>acta de intervención en papel</strong>: un formulario, un lapicero, una firma.</p>
+           <p>El acta existe. Está en una carpeta. La carpeta está en un escritorio.</p>`,
+    fallo: "El papel no tiene copia, no tiene sello y no tiene hora confiable. A partir de aquí, todo lo que pase con ese papel es invisible." },
+  { t: "Lunes 09:40 — El acta viaja",
+    h: 39.5,
+    html: `<p>El oficio con el acta sale de la comisaría rumbo a la Fiscalía. Va en un sobre, en una moto, con un mensajero.</p>
+           <p>Nadie registra a qué hora salió. Nadie registra a qué hora llegó. <strong>No hay constancia de entrega.</strong></p>`,
+    fallo: "El tramo comisaría → fiscalía no tiene dueño. Si el sobre se pierde, nadie puede decir dónde." },
+  { t: "Martes 11:20 — El fiscal encuentra un error",
+    h: 21.0,
+    html: `<p>La fiscal abre el sobre. Lee el acta. En el cuadro de especies incautadas dice <strong>placa ABC-123</strong>, pero la tarjeta del vehículo dice <strong>ABC-124</strong>.</p>
+           <p>Es un error material. Pide por oficio que la policía emita un acta subsanada. El oficio vuelve en papel, por el mismo camino.</p>`,
+    fallo: "Corregir un papel exige mover más papeles. Cada movimiento es otro tramo sin registro." },
+  { t: "Miércoles 02:00 — La subsanación se traspapela",
+    h: 8.0,
+    html: `<p>El acta corregida existe, pero está en la bandeja equivocada. Nadie la busca porque <strong>nadie sabe que falta</strong>: no hay lista de lo que debería haber llegado.</p>
+           <p>El reloj no se detiene. Faltan 8 horas.</p>`,
+    fallo: "Sin registro de lo esperado, lo ausente es indistinguible de lo que nunca existió." },
+  { t: "Miércoles 10:00 — Vence el plazo",
+    h: 0.0,
+    html: `<p>Se cumplen las 48 horas de la detención en flagrancia sin requerimiento fiscal completo.</p>
+           <p>La persona <strong>sale en libertad</strong>. No porque sea inocente o culpable, sino porque el papel no llegó.</p>`,
+    fallo: "El proceso no falló por falta de pruebas. Falló por falta de trazabilidad." },
+  { t: "Miércoles 12:00 — ¿Quién fue responsable?",
+    h: 0.0,
+    final: true,
+    html: `<p>La comisaría dice que envió el sobre. La fiscalía dice que nunca llegó completo. El mensajero dice que entregó <em>algo</em>.</p>
+           <p><strong>No hay registro de quién tuvo el expediente, ni cuándo, ni qué contenía.</strong></p>`,
+    fallo: "Sin dueño, sin reloj y sin memoria, la omisión es invisible. Y lo invisible no tiene responsable." }
+];
 
-const ACTIONS = {
-  DOCUMENT_SEALED_V1: ['Acta Policial V1 sellada', 'ok'],
-  DOCUMENT_VERSION_BRANCHED: ['Acta Subsanada V2 emitida', 'ok'],
-  CUSTODY_TRANSFER_INITIATED: ['Transferencia de custodia iniciada', ''],
-  CUSTODY_TRANSFER_ACKNOWLEDGED: ['Acuse de recibo — tramo cerrado', 'ok'],
-  INTEGRITY_TAMPER_DETECTED: ['Alteración detectada', 'tamper'],
-  SIGNATURE_UNAVAILABLE: ['Firma no disponible', '']
-};
+let paso = 0, timer = null, playing = false;
+const stage = document.getElementById('stage');
+const clock = document.getElementById('clock');
+const bar = document.getElementById('bar');
+const dots = document.getElementById('dots');
+const btnPlay = document.getElementById('btnPlay');
 
-let D = null;
-let current = null;
-
-async function sha256Hex(buf) {
-  const d = await crypto.subtle.digest('SHA-256', buf);
-  return [...new Uint8Array(d)].map(b => b.toString(16).padStart(2, '0')).join('');
+function renderDots() {
+  dots.innerHTML = PROBLEMA.map((s, i) =>
+    `<span class="${i < paso ? 'done' : ''} ${i === paso ? 'now' : ''}">${i + 1}. ${s.t.split('—')[0].trim()}</span>`
+  ).join('');
 }
+
+function renderPaso() {
+  const s = PROBLEMA[paso];
+  stage.classList.toggle('final', !!s.final);
+  stage.innerHTML = `
+    <div class="step-meta sans">Paso ${paso + 1} de ${PROBLEMA.length}</div>
+    <h3>${s.t}</h3>
+    ${s.html}
+    <div class="fallo sans"><strong>El fallo:</strong> ${s.fallo}</div>`;
+  clock.textContent = s.h > 0 ? `⏳ ${s.h.toFixed(1)} h restantes` : `⛔ Plazo vencido — persona en libertad`;
+  clock.classList.toggle('danger', s.h <= 8);
+  bar.style.width = `${(paso / (PROBLEMA.length - 1)) * 100}%`;
+  renderDots();
+  document.getElementById('btnPrev').disabled = paso === 0 || playing;
+  document.getElementById('btnNext').disabled = paso === PROBLEMA.length - 1 || playing;
+  if (paso === PROBLEMA.length - 1) stop();
+}
+
+function stop() {
+  playing = false;
+  clearInterval(timer);
+  btnPlay.textContent = paso === PROBLEMA.length - 1 ? '↻ Repetir' : '▶ Simular';
+  // Refrescar el estado de los botones: durante la simulación estaban bloqueados.
+  document.getElementById('btnPrev').disabled = paso === 0;
+  document.getElementById('btnNext').disabled = paso === PROBLEMA.length - 1;
+}
+function play() {
+  if (paso === PROBLEMA.length - 1) { paso = 0; }
+  playing = true;
+  btnPlay.textContent = '⏸ Pausar';
+  renderPaso();
+  timer = setInterval(() => {
+    if (paso < PROBLEMA.length - 1) { paso++; renderPaso(); }
+    else stop();
+  }, 3800);
+}
+btnPlay.addEventListener('click', () => playing ? stop() : (function(){ btnPlay.textContent='⏸ Pausar'; play(); })());
+document.getElementById('btnPrev').addEventListener('click', () => { stop(); if (paso > 0) paso--; renderPaso(); });
+document.getElementById('btnNext').addEventListener('click', () => { stop(); if (paso < PROBLEMA.length - 1) paso++; renderPaso(); });
+renderPaso();
+
+/* ============ ACTO 2: la solución ============ */
+const DOC_LABELS = {
+  'ACTA_INTERVENCION': ['Acta Policial V1', 'Policía Nacional del Perú · El documento original, sellado al nacer.'],
+  'DISPOSICION_FISCAL': ['Disposición Fiscal', 'Ministerio Público · Generada con Foxit Document Generation. Ordena subsanar y manda preservar la V1.'],
+  'ACTA_INTERVENCION_SUBSANADA': ['Acta Subsanada V2', 'Policía Nacional del Perú · Corrige la placa ABC-123 → ABC-124. La V1 queda intacta y verificable.']
+};
+let D = null;
 
 function esc(s) {
   return String(s ?? '').replace(/[&<>"']/g, c =>
     ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 }
-
-function renderAccess() {
-  const a = D.foxitAccess;
-  const pill = (ok, label) =>
-    `<span class="pill ${ok ? 'pill-ok' : 'pill-warn'}">${ok ? 'OK' : 'NO'} ${label}</span>`;
-  document.getElementById('accessPills').innerHTML =
-    pill(a.documentGeneration, 'DocGen') + ' ' +
-    pill(a.pdfServices, 'PDF Services') + ' ' +
-    pill(a.eSign, 'eSign');
+async function sha256Hex(buf) {
+  const d = await crypto.subtle.digest('SHA-256', buf);
+  return [...new Uint8Array(d)].map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
-function renderCase() {
-  const c = D.case;
-  const h = c.hoursRemaining;
-  const status = h > 0
-    ? `<span class="pill ${h < 6 ? 'pill-bad' : 'pill-warn'}">${h.toFixed(1)} h restantes</span>`
-    : `<span class="pill pill-bad">plazo vencido</span>`;
-  document.getElementById('caseBox').innerHTML = `
-    <div class="kv"><span>Expediente</span><span>${esc(c.case_number)}</span></div>
-    <div class="kv"><span>Asunto</span><span>${esc(c.title)}</span></div>
-    <div class="kv"><span>Delito</span><span>${esc(c.crime)}</span></div>
-    <div class="kv"><span>Estado</span><span>${esc(c.current_status)}</span></div>
-    <div class="kv"><span>Plazo 48 h</span><span>${status}</span></div>`;
-}
-
-function renderFoxit() {
-  const a = D.foxitAccess;
-  const row = (label, ok, note) =>
-    `<div class="kv"><span>${label}</span><span><span class="pill ${ok ? 'pill-ok' : 'pill-warn'}">${ok ? 'OK' : 'NO'}</span></span></div>` +
-    (note ? `<div style="font-size:11px;color:var(--dim);padding:2px 0 8px">${esc(note)}</div>` : '');
-  document.getElementById('foxitBox').innerHTML =
-    row('Document Generation', a.documentGeneration, 'Genera los documentos desde plantillas .docx') +
-    row('PDF Services', a.pdfServices, 'Sube, convierte y descarga') +
-    row('eSign (firma)', a.eSign, a.eSignNote || '');
+function renderDocs() {
+  // Orden cronológico del caso, no alfabético: el acta nace, el fiscal observa, se subsana.
+  const ordered = D.versions.slice().sort((a, b) => a.created_at.localeCompare(b.created_at));
+  document.getElementById('docsOut').innerHTML = ordered.map(v => {
+    const [t, sub] = DOC_LABELS[v.doc_type] || [v.doc_type, ''];
+    const sig = v.signature;
+    return `<div class="doc sans">
+      <h3>${esc(t)}</h3>
+      <div class="who">${esc(sub)}</div>
+      <span class="pill ok">Sellado con hash</span>
+      ${sig && sig.status === 'SIGNED'
+        ? `<span class="pill ok">Firmado · ${esc(sig.envelope_id)}</span>`
+        : `<span class="pill warn">Sin firma — eSign no habilitado</span>`}
+      <code class="hash">${esc(v.sha256)}</code>
+      <div class="mini">El hash <strong>es</strong> el nombre del archivo. Si cambia un solo byte, el nombre deja de coincidir.</div>
+      <div class="doc-actions">
+        <a href="vault/${esc(v.vault_filename)}" target="_blank" rel="noopener">Abrir PDF sellado</a>
+      </div>
+    </div>`;
+  }).join('');
 }
 
 function renderCustody() {
-  const rows = D.custodyChain.map(t => {
-    const done = t.acknowledged_at;
-    return `<div class="kv">
-      <span>${esc(t.from_institution_id)} &rarr; ${esc(t.to_institution_id)}</span>
-      <span>${done
-        ? `<span class="pill pill-ok">acuse ${new Date(t.acknowledged_at).toLocaleDateString('es-PE')}</span>`
-        : `<span class="pill pill-bad">sin acuse</span>`}</span>
-    </div>`;
-  }).join('');
   const open = D.openTransfers.length;
-  const banner = open > 0
-    ? `<div class="notice notice-warn" style="margin-top:10px"><strong>${open} tramo(s) abierto(s).</strong>
-       El expediente está en manos de una institución que todavía no confirmó recepción.
-       En papel eso no se sabe; aquí sí.</div>`
-    : `<div class="notice notice-ok" style="margin-top:10px">Todos los tramos tienen acuse de recibo.</div>`;
-  document.getElementById('custodyBox').innerHTML =
-    (rows || '<div class="kv"><span>Sin transferencias</span><span>—</span></div>') + banner;
-}
-
-function renderTabs() {
-  const tabs = document.getElementById('tabs');
-  tabs.innerHTML = D.versions.map((v, i) => {
-    const [t, sub] = DOC_LABELS[v.doc_type] || [v.doc_type, ''];
-    return `<button class="tab ${i === 0 ? 'active' : ''}" data-vid="${esc(v.id)}">
-      <b>${esc(t)}</b><i>${esc(sub)}</i></button>`;
+  const rows = D.custodyChain.map(t => {
+    const done = !!t.acknowledged_at;
+    return `<p>${done ? '✅' : '🔶'} <strong>${esc(t.from_institution_id)} → ${esc(t.to_institution_id)}</strong> —
+      ${done ? 'acuse de recibo registrado' : '<strong>sin acuse: el expediente está con alguien que no confirmó recepción</strong>'}</p>`;
   }).join('');
-  tabs.querySelectorAll('.tab').forEach(b =>
-    b.addEventListener('click', () => select(b.dataset.vid)));
-  select(D.versions[0] && D.versions[0].id);
+  document.getElementById('custodyOut').innerHTML = `
+    <h3>¿Quién tiene el expediente ahora mismo?</h3>
+    ${rows}
+    <p>${open > 0
+      ? `Hay <strong>${open} tramo abierto</strong>. En papel eso no se sabría; aquí se ve.`
+      : 'Todos los tramos tienen acuse. Nada está en el limbo.'}</p>
+    <p>Cadena de auditoría: <strong>${D.chain.valid ? 'íntegra' : 'ROTA'}</strong> — ${esc(D.chain.message)}</p>`;
 }
 
-function select(versionId) {
-  const v = D.versions.find(x => x.id === versionId);
-  if (!v) return;
-  current = v;
-  document.querySelectorAll('.tab').forEach(b =>
-    b.classList.toggle('active', b.dataset.vid === versionId));
-  document.getElementById('pdfFrame').src = `vault/${v.vault_filename}`;
-  document.getElementById('hashOut').textContent = v.sha256;
-  const sig = v.signature;
-  document.getElementById('sigOut').innerHTML = sig && sig.status === 'SIGNED'
-    ? `<span class="pill pill-ok">Firmado</span> envelope ${esc(sig.envelope_id)}`
-    : `<span class="pill pill-warn">Sin firma</span> <span style="font-size:11px;color:var(--dim)">
-       eSign no está habilitado en esta cuenta. El documento sí está sellado con hash.</span>`;
-  document.getElementById('resOut').className = 'res';
-}
-
-function renderTimeline() {
-  // Cada evento se etiqueta con el tipo de documento al que apunta, no con el
-  // número de versión: la disposición fiscal también es V1 y no es un acta.
-  const byId = {};
-  D.versions.forEach(v => { byId[v.id] = (DOC_LABELS[v.doc_type] && DOC_LABELS[v.doc_type][0]) || v.doc_type; });
-
-  const evs = D.auditEvents.slice().reverse();
-  document.getElementById('timeline').innerHTML = evs.map(e => {
-    const [base, cls] = ACTIONS[e.action] || [e.action, ''];
-    const doc = e.version_id ? byId[e.version_id] : null;
-    const title = doc && e.action.startsWith('DOCUMENT_') ? doc + ' — sellada' : base;
-    const d = e.details || {};
-    let desc = d.reason || d.notes || '';
-    if (!desc && d.registeredSha256) desc = `Hash detectado: ${String(d.actualSha256).slice(0, 24)}…`;
-    if (!desc && d.unavailable_reason) desc = 'eSign requiere credenciales de un portal separado.';
-    return `<div class="ev ${cls}">
-      <div class="ev-t">${new Date(e.recorded_at).toLocaleString('es-PE')} · ${esc(e.user_id || 'SISTEMA')}</div>
-      <div class="ev-ti">${esc(title)}</div>
-      ${desc ? `<div class="ev-d">${esc(desc)}</div>` : ''}
-    </div>`;
-  }).join('');
-}
-
-function renderChain() {
-  const c = D.chain;
-  document.getElementById('chainOut').innerHTML =
-    `<div class="notice ${c.valid ? 'notice-ok' : 'notice-bad'}">
-      <strong>${c.valid ? 'Cadena íntegra' : 'Cadena rota'}</strong><br>
-      ${esc(c.message)}
-    </div>
-    <div style="font-size:11px;color:var(--dim);line-height:1.6">
-      Cada evento encadena el hash del anterior. Si alguien borra o edita una entrada,
-      el encadenamiento se rompe y se detecta. El registro es de solo agregado:
-      no hay ruta de código que actualice o elimine un evento.
-    </div>`;
-}
-
-async function verifyVersion(v) {
-  const res = await fetch(`vault/${v.vault_filename}`);
-  const buf = await res.arrayBuffer();
-  const actual = await sha256Hex(buf);
-  return {
-    type: (DOC_LABELS[v.doc_type] && DOC_LABELS[v.doc_type][0]) || v.doc_type,
-    valid: actual === v.sha256,
-    expected: v.sha256,
-    actual
-  };
+function renderAccess() {
+  const a = D.foxitAccess;
+  const row = (label, ok, note) =>
+    `<p>${ok ? '✅' : '⚠️'} <strong>${label}</strong> — ${esc(note)}</p>`;
+  document.getElementById('accessOut').innerHTML =
+    row('Document Generation', a.documentGeneration, 'Genera los documentos desde plantillas .docx. Probado con llamadas reales.') +
+    row('PDF Services', a.pdfServices, 'Sube, convierte y descarga. Los 4 endpoints responden.') +
+    row('eSign (firma)', a.eSign, a.eSignNote || '');
 }
 
 async function verifyAll() {
   const out = document.getElementById('resOut');
-  out.className = 'res show';
+  out.classList.add('show');
+  out.classList.remove('ok', 'bad');
   out.innerHTML = '<strong>Verificando…</strong><br>Calculando SHA-256 en tu navegador sobre los bytes reales.';
-
   const results = [];
-  for (const v of D.versions) results.push(await verifyVersion(v));
+  for (const v of D.versions) {
+    const buf = await (await fetch(`vault/${v.vault_filename}`)).arrayBuffer();
+    const actual = await sha256Hex(buf);
+    results.push({ v, valid: actual === v.sha256, actual });
+  }
   const bad = results.filter(r => !r.valid);
-
-  out.className = `res show ${bad.length ? 'bad' : 'ok'}`;
-  out.innerHTML = `
-    <h3>${bad.length ? `Alteración detectada en ${bad.length} documento(s)` : `Los ${results.length} documentos están íntegros`}</h3>
-    <div style="font-size:11px;margin-bottom:8px">
-      Web Crypto SHA-256 sobre los bytes reales de cada archivo, comparado contra el hash
-      que da nombre al archivo.
-    </div>
-    ${results.map(r => `
-      <div style="padding:5px 0;border-bottom:1px solid rgba(255,255,255,.08)">
-        <span class="pill ${r.valid ? 'pill-ok' : 'pill-bad'}">${r.valid ? 'ÍNTEGRO' : 'ALTERADO'}</span>
-        <span style="font-size:11px"> ${esc(r.type)}</span>
-      </div>`).join('')}
-    ${bad.length ? `<div class="row2">
-      <div><div style="font-size:10px;color:var(--dim)">Esperado</div><code class="mono">${esc(bad[0].expected)}</code></div>
-      <div><div style="font-size:10px;color:var(--dim)">Actual</div><code class="mono">${esc(bad[0].actual)}</code></div>
-    </div>` : ''}`;
+  out.classList.add(bad.length ? 'bad' : 'ok');
+  const label = id => (DOC_LABELS[D.versions.find(x => x.id === id)?.doc_type] || [id])[0];
+  out.innerHTML = `<strong>${bad.length ? `Alteración detectada en ${bad.length} documento(s)` : `Los ${results.length} documentos están íntegros`}</strong><br>` +
+    results.map(r => `${r.valid ? '✅' : '❌'} ${esc((DOC_LABELS[r.v.doc_type] || [r.v.id])[0])}`).join('<br>');
 }
 
 async function init() {
-  const res = await fetch('data.json');
-  D = await res.json();
-  renderAccess();
-  renderCase();
-  renderFoxit();
+  D = await (await fetch('data.json')).json();
+  renderDocs();
   renderCustody();
-  renderTabs();
-  renderTimeline();
-  renderChain();
+  renderAccess();
   document.getElementById('btnVerify').addEventListener('click', verifyAll);
-  document.getElementById('btnAll').addEventListener('click', verifyAll);
 }
-
 init().catch(e => {
-  document.getElementById('caseBox').innerHTML =
-    `<div class="notice notice-bad">No se pudo cargar data.json.<br>${esc(e.message)}</div>`;
+  document.getElementById('docsOut').innerHTML = `<p>No se pudo cargar data.json: ${esc(e.message)}</p>`;
 });
 </script>
 </body>
