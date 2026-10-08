@@ -26,3 +26,4 @@ node_modules/
 Thumbs.db
 *.log
 DIAG_*.pdf
+pitch_frames/
