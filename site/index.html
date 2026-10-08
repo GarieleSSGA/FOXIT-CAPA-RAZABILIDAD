@@ -848,7 +848,7 @@
   </div>
 
   <!-- DOSSIER DE DOCUMENTACIÓN POLICIAL CONCRETA (REQUISITO EXPLÍCITO DE TEDDY) -->
-  <div style="background:#fff; border:1px solid var(--border-line); border-radius:14px; padding:28px 32px; margin-bottom:36px; box-shadow:0 4px 16px -2px rgba(0,0,0,0.04);">
+  <div id="policeDossierSection" style="background:#fff; border:1px solid var(--border-line); border-radius:14px; padding:28px 32px; margin-bottom:36px; box-shadow:0 4px 16px -2px rgba(0,0,0,0.04);">
     <div style="margin-bottom:20px;">
       <div style="font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:0.1em; color:var(--foxit-orange);">📋 ESPECIFICIDAD NORMATIVA</div>
       <h3 style="font-size:21px; font-weight:800; color:var(--text-primary); margin-top:4px;">El Dossier Policial Concreto en la Comisaría Alfonso Ugarte</h3>
@@ -906,7 +906,7 @@
     <p>Compara simultáneamente qué ocurre en el trámite tradicional en papel versus cómo Foxit garantiza que todo quede grabado y nadie pueda alterar nada.</p>
   </div>
 
-  <div class="forest-grid">
+  <div class="forest-grid" id="forestSection">
 
     <!-- TREE 1: EL PROBLEMA (SISTEMA TRADICIONAL EN PAPEL) -->
     <div class="tree-card problem">
@@ -1025,7 +1025,7 @@ Tus credenciales están conectadas a Foxit Developer Portal (Fusion).
   </div>
 
   <!-- VAULT SECTION -->
-  <section class="vault-section">
+  <section class="vault-section" id="vaultSection">
     <div class="forest-section-header">
       <h2>Bóveda Documental del Caso (Vault)</h2>
       <p>Los 3 documentos generados con Foxit Document Generation y procesados con Foxit PDF Services.</p>
@@ -1036,7 +1036,7 @@ Tus credenciales están conectadas a Foxit Developer Portal (Fusion).
   </section>
 
   <!-- AUDIT TRAIL TABLE -->
-  <section>
+  <section id="auditTrailSection">
     <div class="forest-section-header">
       <h2>Cadena de Auditoría Inmutable (Blockchain-Style Trail)</h2>
       <p>Los 9 eventos procesales encadenados matemáticamente. Modificar un solo evento invalida la cadena entera.</p>
@@ -1507,6 +1507,27 @@ async function initApp() {
   renderParallelTrees();
   renderVault();
   renderAudit();
+
+  // Escenas guiadas para captura y grabación
+  const params = new URLSearchParams(window.location.search);
+  const sc = params.get('scene');
+  if (sc && sc !== '1') {
+    const map = {
+      '2': 'policeDossierSection',
+      '3': 'forestSection',
+      '4': 'forestSection',
+      '5': 'apiSandbox',
+      '6': 'vaultSection',
+      '7': 'auditTrailSection'
+    };
+    const target = document.getElementById(map[sc]);
+    const cont = document.querySelector('.container');
+    if (target && cont) {
+      cont.prepend(target);
+      if (sc === '4') setTimeout(() => openDrawer('fase5'), 100);
+      if (sc === '5') setTimeout(() => runDynamicApiTest(), 100);
+    }
+  }
 }
 
 window.addEventListener('DOMContentLoaded', initApp);

@@ -27,3 +27,4 @@ Thumbs.db
 *.log
 DIAG_*.pdf
 pitch_frames/
+demo_capture_temp/
