@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-08T01:41:51.984Z",
+  "generatedAt": "2026-10-08T09:02:00.062Z",
   "generator": "export_static.mjs",
   "note": "Los hashes de este archivo son verificables con el bloque de verificación por hash de Git. La verificación de los PDFs la hace el navegador comparando SHA-256 contra el nombre del archivo.",
   "case": {
@@ -11,7 +11,7 @@
     "current_holder_institution_id": "INST-PNP",
     "created_at": "2026-10-07T01:15:00.000Z",
     "deadline48h": "2026-10-09T01:15:00.000Z",
-    "hoursRemaining": 23.552224166666665
+    "hoursRemaining": 16.21664722222222
   },
   "foxitAccess": {
     "documentGeneration": true,
@@ -83,9 +83,9 @@
       "registered_by_user_id": "USR-PNP-01",
       "reason": "Acta original levantada en flagrancia.",
       "integrity_status": "SEALED",
-      "created_at": "2026-10-08T01:26:52.807Z",
+      "created_at": "2026-10-08T08:55:23.389Z",
       "signature": {
-        "id": "SIG-UNAVAIL-E80D0F29",
+        "id": "SIG-UNAVAIL-8CA2B10A",
         "version_id": "VER-ACTA-PNP-2026-084-AU-V1",
         "provider": "Foxit eSign",
         "envelope_id": null,
@@ -95,7 +95,7 @@
         "signed_by": null,
         "signer_ip": null,
         "certificate_serial": null,
-        "recorded_at": "2026-10-08T01:26:52.822Z"
+        "recorded_at": "2026-10-08T08:55:23.408Z"
       }
     },
     {
@@ -105,15 +105,15 @@
       "doc_type": "ACTA_INTERVENCION_SUBSANADA",
       "version_number": 2,
       "parent_version_id": "VER-ACTA-PNP-2026-084-AU-V1",
-      "sha256": "0e10af844495530b341011d6cefe313149065547ac5089974031ad7961cc5164",
+      "sha256": "ad84bc607c3ee5dcf50bd4f4caf668cd21ce4f56df6e8ee5c4fb259d4adccd88",
       "size_bytes": 36481,
-      "vault_filename": "0e10af844495530b341011d6cefe313149065547ac5089974031ad7961cc5164.pdf",
+      "vault_filename": "ad84bc607c3ee5dcf50bd4f4caf668cd21ce4f56df6e8ee5c4fb259d4adccd88.pdf",
       "registered_by_user_id": "USR-PNP-01",
       "reason": "Subsanación de la placa vehicular. La V1 se preserva íntegra y verificable.",
       "integrity_status": "SEALED",
-      "created_at": "2026-10-08T01:26:55.978Z",
+      "created_at": "2026-10-08T08:55:25.967Z",
       "signature": {
-        "id": "SIG-UNAVAIL-55F54413",
+        "id": "SIG-UNAVAIL-4D346AC5",
         "version_id": "VER-ACTA-PNP-2026-084-AU-V2",
         "provider": "Foxit eSign",
         "envelope_id": null,
@@ -123,7 +123,7 @@
         "signed_by": null,
         "signer_ip": null,
         "certificate_serial": null,
-        "recorded_at": "2026-10-08T01:26:55.983Z"
+        "recorded_at": "2026-10-08T08:55:25.973Z"
       }
     },
     {
@@ -133,15 +133,15 @@
       "doc_type": "DISPOSICION_FISCAL",
       "version_number": 1,
       "parent_version_id": "VER-ACTA-PNP-2026-084-AU-V1",
-      "sha256": "b9e5104ac4f8871969753ba96ea816fe236f87060bf491bfc02bdc627919f392",
+      "sha256": "9e91c3a25d926fb92ad1b65a3cd11445f990c2e3fc0d81aff031a543be4c80e6",
       "size_bytes": 33625,
-      "vault_filename": "b9e5104ac4f8871969753ba96ea816fe236f87060bf491bfc02bdc627919f392.pdf",
+      "vault_filename": "9e91c3a25d926fb92ad1b65a3cd11445f990c2e3fc0d81aff031a543be4c80e6.pdf",
       "registered_by_user_id": "USR-MP-01",
       "reason": "Disposición fiscal que ordena la subsanación y manda preservar la V1.",
       "integrity_status": "SEALED",
-      "created_at": "2026-10-08T01:26:55.072Z",
+      "created_at": "2026-10-08T08:55:25.243Z",
       "signature": {
-        "id": "SIG-UNAVAIL-1B874267",
+        "id": "SIG-UNAVAIL-6B5636FC",
         "version_id": "VER-DISP-MP-2026-092-V1",
         "provider": "Foxit eSign",
         "envelope_id": null,
@@ -151,7 +151,7 @@
         "signed_by": null,
         "signer_ip": null,
         "certificate_serial": null,
-        "recorded_at": "2026-10-08T01:26:55.076Z"
+        "recorded_at": "2026-10-08T08:55:25.251Z"
       }
     }
   ],
@@ -175,8 +175,8 @@
         "bytes": 36953
       },
       "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
-      "event_hash": "99611ead963fd83350fd1bddac69c4e3307bb0df78af594f0b16344660a0f9f3",
-      "recorded_at": "2026-10-08T01:26:52.818Z"
+      "event_hash": "cdb8beba30769c3e9a6befa043b57199f491a841ed6f0db7f5eb2b1624d091b6",
+      "recorded_at": "2026-10-08T08:55:23.404Z"
     },
     {
       "seq": 2,
@@ -188,9 +188,9 @@
       "details": {
         "reason": "eSign NO está habilitado en esta cuenta. Foxit separa el portal de firma del de PDF Services: las credenciales actuales responden invalid_client. Se requiere solicitud en developer-api.foxit.com/esign (Contact Sales)."
       },
-      "prev_hash": "99611ead963fd83350fd1bddac69c4e3307bb0df78af594f0b16344660a0f9f3",
-      "event_hash": "cb2b04c91da645e28f6c08caa8a33bd0de3d27d35e6b34018b5e547355a44131",
-      "recorded_at": "2026-10-08T01:26:52.824Z"
+      "prev_hash": "cdb8beba30769c3e9a6befa043b57199f491a841ed6f0db7f5eb2b1624d091b6",
+      "event_hash": "b7c0b13fcf975b0ddca9c29a7413eb25d2197e2446afd9a2e8d6e41852f88a08",
+      "recorded_at": "2026-10-08T08:55:23.410Z"
     },
     {
       "seq": 3,
@@ -208,9 +208,9 @@
         ],
         "notes": "Oficio N.° 104-2026 a la 3ra Fiscalía Provincial Penal Corporativa de Lima."
       },
-      "prev_hash": "cb2b04c91da645e28f6c08caa8a33bd0de3d27d35e6b34018b5e547355a44131",
-      "event_hash": "6b87130ca67e2a8eacb6d6bdc7d0cf1469cefe1924ef94695e7d5ad5e2c46663",
-      "recorded_at": "2026-10-08T01:26:52.829Z"
+      "prev_hash": "b7c0b13fcf975b0ddca9c29a7413eb25d2197e2446afd9a2e8d6e41852f88a08",
+      "event_hash": "385aec9e4034704b9186b154817dd5df0535e0a0c17e0360faa8a0f5b50eec13",
+      "recorded_at": "2026-10-08T08:55:23.417Z"
     },
     {
       "seq": 4,
@@ -223,16 +223,16 @@
         "documentCode": "DISP-MP-2026-092",
         "docType": "DISPOSICION_FISCAL",
         "versionNumber": 1,
-        "sha256": "b9e5104ac4f8871969753ba96ea816fe236f87060bf491bfc02bdc627919f392",
+        "sha256": "9e91c3a25d926fb92ad1b65a3cd11445f990c2e3fc0d81aff031a543be4c80e6",
         "parentVersionId": "VER-ACTA-PNP-2026-084-AU-V1",
         "reason": "Disposición fiscal que ordena la subsanación y manda preservar la V1.",
         "foxitDocumentId": null,
         "foxitSource": "local-file",
         "bytes": 33625
       },
-      "prev_hash": "6b87130ca67e2a8eacb6d6bdc7d0cf1469cefe1924ef94695e7d5ad5e2c46663",
-      "event_hash": "0d26a46d9fa5e9b0e7203614a83901ca92bc5296887d0b4e0f378895034cc09f",
-      "recorded_at": "2026-10-08T01:26:55.074Z"
+      "prev_hash": "385aec9e4034704b9186b154817dd5df0535e0a0c17e0360faa8a0f5b50eec13",
+      "event_hash": "f9ccacc009b20010a4ff4803ae16423986ed6bc6947c83f6dbbd275a2c2f5a44",
+      "recorded_at": "2026-10-08T08:55:25.246Z"
     },
     {
       "seq": 5,
@@ -244,9 +244,9 @@
       "details": {
         "reason": "eSign NO está habilitado en esta cuenta. Foxit separa el portal de firma del de PDF Services: las credenciales actuales responden invalid_client. Se requiere solicitud en developer-api.foxit.com/esign (Contact Sales)."
       },
-      "prev_hash": "0d26a46d9fa5e9b0e7203614a83901ca92bc5296887d0b4e0f378895034cc09f",
-      "event_hash": "76901ed9905704e935ed553d398e6d829bb1d77e07984ec0fccb81c5da45470c",
-      "recorded_at": "2026-10-08T01:26:55.077Z"
+      "prev_hash": "f9ccacc009b20010a4ff4803ae16423986ed6bc6947c83f6dbbd275a2c2f5a44",
+      "event_hash": "c70e1660b278b7ec3cf4631e96f68ec9a36a51b8a5d2f83fa80d038997d46d0d",
+      "recorded_at": "2026-10-08T08:55:25.253Z"
     },
     {
       "seq": 6,
@@ -259,16 +259,16 @@
         "documentCode": "ACTA-PNP-2026-084-AU",
         "docType": "ACTA_INTERVENCION_SUBSANADA",
         "versionNumber": 2,
-        "sha256": "0e10af844495530b341011d6cefe313149065547ac5089974031ad7961cc5164",
+        "sha256": "ad84bc607c3ee5dcf50bd4f4caf668cd21ce4f56df6e8ee5c4fb259d4adccd88",
         "parentVersionId": "VER-ACTA-PNP-2026-084-AU-V1",
         "reason": "Subsanación de la placa vehicular. La V1 se preserva íntegra y verificable.",
         "foxitDocumentId": null,
         "foxitSource": "local-file",
         "bytes": 36481
       },
-      "prev_hash": "76901ed9905704e935ed553d398e6d829bb1d77e07984ec0fccb81c5da45470c",
-      "event_hash": "6b0a7d11a8db4f09d3c54a36e23c66514cd5ae2e951a8d13e87181a220bc0009",
-      "recorded_at": "2026-10-08T01:26:55.981Z"
+      "prev_hash": "c70e1660b278b7ec3cf4631e96f68ec9a36a51b8a5d2f83fa80d038997d46d0d",
+      "event_hash": "7b83b301f99c4b3b2ca21b5b385b069bb2b60af3e5e808d204a97bd60a5a63a1",
+      "recorded_at": "2026-10-08T08:55:25.970Z"
     },
     {
       "seq": 7,
@@ -280,9 +280,9 @@
       "details": {
         "reason": "eSign NO está habilitado en esta cuenta. Foxit separa el portal de firma del de PDF Services: las credenciales actuales responden invalid_client. Se requiere solicitud en developer-api.foxit.com/esign (Contact Sales)."
       },
-      "prev_hash": "6b0a7d11a8db4f09d3c54a36e23c66514cd5ae2e951a8d13e87181a220bc0009",
-      "event_hash": "012dfbdd41b9d35096450ea19b996985e0c46d2443a54495676ecf157117cdad",
-      "recorded_at": "2026-10-08T01:26:55.985Z"
+      "prev_hash": "7b83b301f99c4b3b2ca21b5b385b069bb2b60af3e5e808d204a97bd60a5a63a1",
+      "event_hash": "5cf2680554ff1e8ad6d05b124016516b4cc7069586b7ffb04dfc1c798da62ae7",
+      "recorded_at": "2026-10-08T08:55:25.976Z"
     },
     {
       "seq": 8,
@@ -294,11 +294,11 @@
       "details": {
         "transferId": "TRF-0001",
         "notes": "Recibido conforme.",
-        "elapsedMs": 3159
+        "elapsedMs": 2565
       },
-      "prev_hash": "012dfbdd41b9d35096450ea19b996985e0c46d2443a54495676ecf157117cdad",
-      "event_hash": "455b059ba213868c23107ca471fbc922e4c9e429d37534ef08f263faf352c882",
-      "recorded_at": "2026-10-08T01:26:55.989Z"
+      "prev_hash": "5cf2680554ff1e8ad6d05b124016516b4cc7069586b7ffb04dfc1c798da62ae7",
+      "event_hash": "78c3d013954453fef5693771d9a32b28037d30faea3e0d125cf93be735c5b0a6",
+      "recorded_at": "2026-10-08T08:55:25.984Z"
     },
     {
       "seq": 9,
@@ -318,9 +318,9 @@
         ],
         "notes": "Requerimiento de prisión preventiva elevado al juzgado con V1 y V2 integradas."
       },
-      "prev_hash": "455b059ba213868c23107ca471fbc922e4c9e429d37534ef08f263faf352c882",
-      "event_hash": "6d0f2a9cd18aa4a7046023a484ecbc03f62b21907ecd233d211bcfdbde001d50",
-      "recorded_at": "2026-10-08T01:26:55.993Z"
+      "prev_hash": "78c3d013954453fef5693771d9a32b28037d30faea3e0d125cf93be735c5b0a6",
+      "event_hash": "4be8a6455b2017391e431809cafefec0fd5f49b1f7a61f49c3567f6c5470ecf9",
+      "recorded_at": "2026-10-08T08:55:25.989Z"
     }
   ],
   "chain": {
@@ -342,9 +342,9 @@
         "VER-ACTA-PNP-2026-084-AU-V1"
       ],
       "notes": "Recibido conforme.",
-      "acknowledged_at": "2026-10-08T01:26:55.987Z",
+      "acknowledged_at": "2026-10-08T08:55:25.980Z",
       "acknowledged_by": "USR-MP-01",
-      "transferred_at": "2026-10-08T01:26:52.828Z"
+      "transferred_at": "2026-10-08T08:55:23.415Z"
     },
     {
       "id": "TRF-0002",
@@ -361,7 +361,7 @@
       "notes": "Requerimiento de prisión preventiva elevado al juzgado con V1 y V2 integradas.",
       "acknowledged_at": null,
       "acknowledged_by": null,
-      "transferred_at": "2026-10-08T01:26:55.991Z"
+      "transferred_at": "2026-10-08T08:55:25.987Z"
     }
   ],
   "openTransfers": [
@@ -380,8 +380,8 @@
       "notes": "Requerimiento de prisión preventiva elevado al juzgado con V1 y V2 integradas.",
       "acknowledged_at": null,
       "acknowledged_by": null,
-      "transferred_at": "2026-10-08T01:26:55.991Z",
-      "openHours": "0.2"
+      "transferred_at": "2026-10-08T08:55:25.987Z",
+      "openHours": "0.1"
     }
   ]
 }

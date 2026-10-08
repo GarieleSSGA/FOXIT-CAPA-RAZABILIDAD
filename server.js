@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Servidor web del MVP â€” Capa de trazabilidad Foxit.
  *
  *   node server.js
@@ -211,15 +211,21 @@ const server = http.createServer((req, res) => {
       return;
     }
 
-    const filePath = path.join(__dirname, pathname === '/' ? 'demo.html' : pathname);
-    if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
-      sendFile(res, filePath, MIME_TYPES[path.extname(filePath)] || 'text/plain; charset=utf-8');
+    if (pathname === '/data.json' && req.method === 'GET') {
+      const p = path.join(__dirname, 'site', 'data.json');
+      sendFile(res, p, 'application/json; charset=utf-8');
       return;
     }
 
-    const indexPath = path.join(__dirname, 'demo.html');
-    if (fs.existsSync(indexPath)) {
-      sendFile(res, indexPath, 'text/html; charset=utf-8');
+    const defaultPage = path.join(__dirname, 'site', 'index.html');
+    const targetFile = pathname === '/' ? defaultPage : path.join(__dirname, pathname);
+    if (fs.existsSync(targetFile) && fs.statSync(targetFile).isFile()) {
+      sendFile(res, targetFile, MIME_TYPES[path.extname(targetFile)] || 'text/plain; charset=utf-8');
+      return;
+    }
+
+    if (fs.existsSync(defaultPage)) {
+      sendFile(res, defaultPage, 'text/html; charset=utf-8');
       return;
     }
     res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });

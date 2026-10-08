@@ -45,7 +45,7 @@ const esign = esignStatus(env);
 // NO se borra SITE_DIR completo: index.html vive ahí y es fuente, no salida.
 // Solo se regeneran data.json, MANIFEST.json y vault/.
 fs.mkdirSync(SITE_VAULT, { recursive: true });
-for (const f of fs.readdirSync(SITE_VAULT)) fs.rmSync(path.join(SITE_VAULT, f), { force: true });
+for (const f of fs.readdirSync(SITE_VAULT)) fs.rmSync(path.join(SITE_VAULT, f), { recursive: true, force: true });
 
 const INDEX_PATH = path.join(SITE_DIR, 'index.html');
 if (!fs.existsSync(INDEX_PATH)) {
