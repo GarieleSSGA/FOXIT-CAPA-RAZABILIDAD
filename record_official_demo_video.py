@@ -1,9 +1,9 @@
 """
-Grabador y Productor del Video Pitch Oficial para Teddy y el Foxit Leadership Team.
-1. Captura la INTERFAZ REAL Y OFICIAL de la demo (site/index.html) en resolución 1080p con Microsoft Edge headless.
-2. Sintetiza locución oficial en español (Microsoft Sabina Desktop SAPI).
-3. Sincroniza audio y video cuadro por cuadro.
-4. Compila con FFmpeg en site/video_pitch_foxit_leadership.mp4 con pista de audio AAC.
+Official Pitch Video Producer for Teddy and the Foxit Executive Leadership Team.
+1. Captures the OFFICIAL DEMO UI (site/index.html) in 1080p resolution using headless Microsoft Edge.
+2. Synthesizes executive English voiceover narration (Microsoft Zira Desktop SAPI).
+3. Synchronizes audio and video frame-by-frame.
+4. Compiles with FFmpeg into site/video_pitch_foxit_leadership.mp4 with an AAC audio track.
 """
 
 import os
@@ -20,86 +20,91 @@ EDGE_EXE = "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
 os.makedirs(TEMP_DIR, exist_ok=True)
 os.makedirs(SITE_DIR, exist_ok=True)
 
-# 7 Escenas con guión de locución detallado y pedagógico
+# 7 English Scenes with synchronized executive voiceover script
 SCENES = [
     {
         "id": "1",
-        "name": "Portada y Reloj de Flagrancia",
+        "name": "Cover & 48-Hour Statutory Flagrancy Clock",
         "narration": (
-            "Bienvenidos a la demostración oficial de la Capa de Trazabilidad Documental para el Proceso Penal, "
-            "construida sobre las APIs de Foxit. En esta pantalla observamos el caso real EXP 2026 084 Lima por hurto agravado, "
-            "con un reloj legal perentorio de 48 horas de flagrancia y las credenciales activas de Foxit Developer."
+            "Welcome to the official demonstration of the Criminal Procedural Traceability Layer, "
+            "built on Foxit SDK and APIs. Here, we present authentic case EXP-2026-084-LIMA for aggravated theft, "
+            "featuring the strict forty-eight hour constitutional flagrancy countdown and live credentials "
+            "connected to the Foxit Developer Portal."
         )
     },
     {
         "id": "2",
-        "name": "Dossier de Documentos Policiales Concretos",
+        "name": "Official Statutory Police Evidence Dossier",
         "narration": (
-            "En respuesta al requerimiento de Teddy, presentamos el dossier completo de los seis instrumentos policiales oficiales. "
-            "El acta de intervención en flagrancia, la notificación de detención y derechos, el registro personal e incautación, "
-            "el rótulo oficial de cadena de custodia, la manifestación del imputado y el informe policial de remisión. "
-            "Cada uno nace digitalizado con Foxit Document Generation y con un sello de integridad criptográfica inmutable."
+            "Addressing Teddy's specific mandate, we present the complete dossier of the six official police instruments: "
+            "the in-flagrante intervention record, notice of arrest and constitutional rights, the property seizure record, "
+            "the chain of custody form, the suspect deposition, and the final consolidated police report. "
+            "Every document is generated via Foxit Document Generation and sealed at birth with an immutable "
+            "SHA-256 cryptographic digest."
         )
     },
     {
         "id": "3",
-        "name": "Bosque Procesal Lado a Lado",
+        "name": "Procedural Forest Side-by-Side (Tree 1 vs. Tree 2)",
         "narration": (
-            "Aquí observamos el Bosque Procesal con los dos árboles paralelos en simultáneo. "
-            "A la izquierda, el árbol del régimen tradicional en papel con sus siete puntos críticos de ruptura donde se caen los juicios. "
-            "A la derecha, el árbol blindado con Foxit, donde cada transferencia exige acuse de recibo y ningún plazo vence en silencio."
+            "Here we observe the Procedural Forest with both trees side-by-side. "
+            "On the left, Tree 1 shows the traditional paper regime with seven critical points of failure where evidence vanishes "
+            "and cases collapse. On the right, Tree 2 shows the Foxit-hardened architecture, where every transfer requires "
+            "mandatory digital acknowledgment and no statutory deadline can expire in silence."
         )
     },
     {
         "id": "4",
-        "name": "Inspección de Fase y Versionado Inmutable",
+        "name": "Phase Inspection and Immutable Versioning",
         "narration": (
-            "Al inspeccionar la fase de subsanación, vemos cómo Foxit resuelve el mayor vicio procesal: "
-            "cuando el fiscal detecta un error en la placa del vehículo incautado, en el sistema tradicional se destruye el acta original. "
-            "Con Foxit aplicamos versionado inmutable: el fiscal emite su Disposición V1 y la policía genera el Acta V2. "
-            "Ambas conviven intactas en la bóveda, preservando la verdad histórica."
+            "Inspecting the rectification stage demonstrates how Foxit eliminates the most dangerous procedural abuse: "
+            "when a prosecutor detects an error in the seized vehicle plate, traditional paper is destroyed and backdated. "
+            "With Foxit, we enforce immutable versioning: the prosecutor issues Disposition V1 with Foxit DocGen, "
+            "and police produce Record V2. Both versions coexist permanently in the Vault, preserving the true chain of events."
         )
     },
     {
         "id": "5",
-        "name": "Consola Dinámica de Foxit APIs",
+        "name": "Foxit APIs Dynamic Invocation Console",
         "narration": (
-            "Esta consola interactiva permite al comité de liderazgo verificar la ejecución directa contra Foxit. "
-            "Al pulsar invocar, la API Document Generation genera el documento oficial en mil seiscientos milisegundos con estatus doscientos OK. "
-            "Asimismo, declaramos con honestidad técnica que el módulo de firma electrónica queda preparado para su plan comercial corporativo."
+            "This dynamic console enables leadership to verify real execution against Foxit APIs. "
+            "Invoking the service processes the official document in sixteen hundred milliseconds with HTTP 200 OK. "
+            "Furthermore, with complete technical honesty, we declare that Foxit eSign is architected and ready for "
+            "activation upon enterprise commercial subscription."
         )
     },
     {
         "id": "6",
-        "name": "Bóveda Documental y Verificación Web Crypto",
+        "name": "Case Document Vault and Web Crypto Verification",
         "narration": (
-            "En la bóveda documental residen los tres PDFs sellados generados con Foxit. "
-            "Cualquier juez, fiscal o auditor independiente puede verificar la autenticidad matemática en treinta milisegundos "
-            "directamente en su navegador con Web Crypto SHA-256, sin necesidad de servidores propietarios ni permisos especiales."
+            "Inside the Document Vault reside the three sealed PDFs generated with Foxit Document Generation. "
+            "Any judge, prosecutor, or independent auditor can verify byte-for-byte mathematical integrity in thirty milliseconds "
+            "directly inside the browser using the native Web Crypto API, without proprietary servers or external dependencies."
         )
     },
     {
         "id": "7",
-        "name": "Cadena de Auditoría y Escalabilidad",
+        "name": "Immutable Audit Trail and Public Sector Scalability",
         "narration": (
-            "Los nueve eventos procesales forman una cadena matemática inquebrantable que enlaza el hash del hito anterior. "
-            "Esta solución es 100% viable con el presupuesto propuesto y escala de inmediato a municipalidades y cortes de justicia. "
-            "Foxit es el futuro de la documentación y trazabilidad para el Estado moderno. Muchas gracias."
+            "All nine procedural events form an unbreakable cryptographic chain linking each step to the previous hash. "
+            "This architecture is one hundred percent feasible within our proposed budget and scales immediately across "
+            "municipal licensing, public procurement, and superior courts. "
+            "Foxit is the future of trustworthy document intelligence for modernized governance. Thank you."
         )
     }
 ]
 
 def generate_audio(text, output_wav):
     speaker = win32com.client.Dispatch("SAPI.SpVoice")
-    # Seleccionar voz en español (Sabina o Helena)
+    # Select US English voice (Microsoft Zira Desktop)
     voices = speaker.GetVoices()
     for v in voices:
         desc = v.GetDescription()
-        if "Sabina" in desc or "Helena" in desc or "Spanish" in desc:
+        if "Zira" in desc or "English" in desc:
             speaker.Voice = v
             break
             
-    speaker.Rate = 0  # Velocidad natural
+    speaker.Rate = 0  # Natural cadence
     filestream = win32com.client.Dispatch("SAPI.SpFileStream")
     filestream.Open(output_wav, 3, False)
     speaker.AudioOutputStream = filestream
@@ -133,18 +138,18 @@ def build_scene_clip(scene_idx, scene_data):
     png_path = os.path.join(TEMP_DIR, f"screen_scene_{sid}.png")
     clip_mp4 = os.path.join(TEMP_DIR, f"clip_scene_{sid}.mp4")
     
-    print(f"\n--- Procesando Escena {sid}: {scene_data['name']} ---")
+    print(f"\n--- Processing Scene {sid}: {scene_data['name']} ---")
     
-    # 1. Audio
+    # 1. Voiceover Audio Generation
     duration = generate_audio(scene_data["narration"], wav_path)
-    total_duration = duration + 1.2  # 1.2s de margen visual
-    print(f"  Locución: {duration:.2f}s | Duración escena: {total_duration:.2f}s")
+    total_duration = duration + 1.2  # 1.2s visual breathing room
+    print(f"  Voiceover: {duration:.2f}s | Clip duration: {total_duration:.2f}s")
     
-    # 2. Captura de pantalla de la demo oficial
+    # 2. Capture Official English Demo UI
     capture_official_demo_screen(sid, png_path)
-    print(f"  Captura de pantalla oficial: {png_path} ({os.path.getsize(png_path)} bytes)")
+    print(f"  Official Demo Screenshot: {png_path} ({os.path.getsize(png_path)} bytes)")
     
-    # 3. Compilar clip parcial con ffmpeg
+    # 3. Compile partial clip with ffmpeg
     cmd = [
         "ffmpeg", "-y",
         "-loop", "1",
@@ -160,12 +165,12 @@ def build_scene_clip(scene_idx, scene_data):
         clip_mp4
     ]
     subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    print(f"  Clip de video compilado: {clip_mp4}")
+    print(f"  Compiled video clip: {clip_mp4}")
     return clip_mp4
 
 def main():
     print("=================================================================")
-    print("PRODUCIENDO VIDEO OFICIAL DE LA DEMO CON AUDIO Y CAPTURAS REALES")
+    print("PRODUCING OFFICIAL ENGLISH PITCH VIDEO WITH DEMO UI CAPTURES")
     print("=================================================================")
     
     clip_files = []
@@ -179,7 +184,7 @@ def main():
             c_esc = c.replace("\\", "/")
             f.write(f"file '{c_esc}'\n")
             
-    print("\nEnsamblando video final con FFmpeg...")
+    print("\nAssembling final video with FFmpeg...")
     cmd_concat = [
         "ffmpeg", "-y",
         "-f", "concat",
@@ -194,9 +199,9 @@ def main():
     
     size_mb = os.path.getsize(OUTPUT_VIDEO) / (1024 * 1024)
     print("=================================================================")
-    print(f"¡VIDEO OFICIAL COMPLETADO EXITOSAMENTE!")
-    print(f"Archivo: {OUTPUT_VIDEO}")
-    print(f"Tamaño: {size_mb:.2f} MB")
+    print(f"OFFICIAL ENGLISH DEMO PITCH VIDEO COMPLETED SUCCESSFULLY!")
+    print(f"File: {OUTPUT_VIDEO}")
+    print(f"Size: {size_mb:.2f} MB")
     print("=================================================================")
 
 if __name__ == "__main__":

@@ -1,12 +1,12 @@
 {
   "generatedAt": "2026-10-08T09:42:58.643Z",
   "generator": "export_static.mjs",
-  "note": "Los hashes de este archivo son verificables con el bloque de verificación por hash de Git. La verificación de los PDFs la hace el navegador comparando SHA-256 contra el nombre del archivo.",
+  "note": "The hashes in this file are verifiable against the Git commit digest and Web Crypto SHA-256.",
   "case": {
     "id": "CASE-2026-084",
     "case_number": "EXP-2026-084-LIMA",
-    "title": "Intervención en flagrancia —hurto PDP agravado",
-    "crime": "Delito contra el patrimonio — Hurto agravado (Art. 186 CP)",
+    "title": "In-flagrante police intervention — aggravated theft",
+    "crime": "Crime against property — Aggravated theft (Peruvian Penal Code Art. 186)",
     "current_status": "POLICE_INVESTIGATION",
     "current_holder_institution_id": "INST-PNP",
     "created_at": "2026-10-07T01:15:00.000Z",
@@ -81,7 +81,7 @@
       "size_bytes": 36953,
       "vault_filename": "cdcd7e6bca653514e3624b4756892b8ac3bcfb541afa36977ef218d509c00218.pdf",
       "registered_by_user_id": "USR-PNP-01",
-      "reason": "Acta original levantada en flagrancia.",
+      "reason": "Original in-flagrante police record. Sealed at birth with Foxit Document Generation API.",
       "integrity_status": "SEALED",
       "created_at": "2026-10-08T08:55:23.389Z",
       "signature": {
@@ -90,13 +90,14 @@
         "provider": "Foxit eSign",
         "envelope_id": null,
         "status": "UNAVAILABLE",
-        "unavailable_reason": "eSign NO está habilitado en esta cuenta. Foxit separa el portal de firma del de PDF Services: las credenciales actuales responden invalid_client. Se requiere solicitud en developer-api.foxit.com/esign (Contact Sales).",
+        "unavailable_reason": "eSign requires an enterprise commercial plan. The system transparently flags signature as unavailable.",
         "signed_at": null,
         "signed_by": null,
         "signer_ip": null,
         "certificate_serial": null,
         "recorded_at": "2026-10-08T08:55:23.408Z"
-      }
+      },
+      "title": "Police Intervention Record (V1 Original)"
     },
     {
       "id": "VER-ACTA-PNP-2026-084-AU-V2",
@@ -109,7 +110,7 @@
       "size_bytes": 36481,
       "vault_filename": "ad84bc607c3ee5dcf50bd4f4caf668cd21ce4f56df6e8ee5c4fb259d4adccd88.pdf",
       "registered_by_user_id": "USR-PNP-01",
-      "reason": "Subsanación de la placa vehicular. La V1 se preserva íntegra y verificable.",
+      "reason": "Rectification of license plate ABC-123 -> ABC-124. Both V1 and V2 coexist in Vault.",
       "integrity_status": "SEALED",
       "created_at": "2026-10-08T08:55:25.967Z",
       "signature": {
@@ -118,13 +119,14 @@
         "provider": "Foxit eSign",
         "envelope_id": null,
         "status": "UNAVAILABLE",
-        "unavailable_reason": "eSign NO está habilitado en esta cuenta. Foxit separa el portal de firma del de PDF Services: las credenciales actuales responden invalid_client. Se requiere solicitud en developer-api.foxit.com/esign (Contact Sales).",
+        "unavailable_reason": "eSign requires an enterprise commercial plan. The system transparently flags signature as unavailable.",
         "signed_at": null,
         "signed_by": null,
         "signer_ip": null,
         "certificate_serial": null,
         "recorded_at": "2026-10-08T08:55:25.973Z"
-      }
+      },
+      "title": "Rectified Police Intervention Record (V2)"
     },
     {
       "id": "VER-DISP-MP-2026-092-V1",
@@ -137,7 +139,7 @@
       "size_bytes": 33625,
       "vault_filename": "9e91c3a25d926fb92ad1b65a3cd11445f990c2e3fc0d81aff031a543be4c80e6.pdf",
       "registered_by_user_id": "USR-MP-01",
-      "reason": "Disposición fiscal que ordena la subsanación y manda preservar la V1.",
+      "reason": "Prosecutor notes license plate discrepancy and orders rectification while preserving V1 intact.",
       "integrity_status": "SEALED",
       "created_at": "2026-10-08T08:55:25.243Z",
       "signature": {
@@ -146,13 +148,14 @@
         "provider": "Foxit eSign",
         "envelope_id": null,
         "status": "UNAVAILABLE",
-        "unavailable_reason": "eSign NO está habilitado en esta cuenta. Foxit separa el portal de firma del de PDF Services: las credenciales actuales responden invalid_client. Se requiere solicitud en developer-api.foxit.com/esign (Contact Sales).",
+        "unavailable_reason": "eSign requires an enterprise commercial plan. The system transparently flags signature as unavailable.",
         "signed_at": null,
         "signed_by": null,
         "signer_ip": null,
         "certificate_serial": null,
         "recorded_at": "2026-10-08T08:55:25.251Z"
-      }
+      },
+      "title": "Prosecutorial Rectification Order (V1)"
     }
   ],
   "auditEvents": [
