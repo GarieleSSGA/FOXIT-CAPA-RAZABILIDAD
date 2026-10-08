@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-08T09:02:00.062Z",
+  "generatedAt": "2026-10-08T09:19:06.445Z",
   "generator": "export_static.mjs",
   "note": "Los hashes de este archivo son verificables con el bloque de verificación por hash de Git. La verificación de los PDFs la hace el navegador comparando SHA-256 contra el nombre del archivo.",
   "case": {
@@ -11,7 +11,7 @@
     "current_holder_institution_id": "INST-PNP",
     "created_at": "2026-10-07T01:15:00.000Z",
     "deadline48h": "2026-10-09T01:15:00.000Z",
-    "hoursRemaining": 16.21664722222222
+    "hoursRemaining": 15.931540277777778
   },
   "foxitAccess": {
     "documentGeneration": true,
@@ -381,7 +381,7 @@
       "acknowledged_at": null,
       "acknowledged_by": null,
       "transferred_at": "2026-10-08T08:55:25.987Z",
-      "openHours": "0.1"
+      "openHours": "0.4"
     }
   ]
 }

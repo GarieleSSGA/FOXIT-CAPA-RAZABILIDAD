@@ -12,6 +12,7 @@
 import http from 'http';
 import fs from 'fs';
 import path from 'path';
+import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 import { TraceabilityEngine, VAULT_DIR } from './traceability_engine.js';
 import { loadEnv, esignStatus } from './config.mjs';
@@ -186,9 +187,101 @@ const server = http.createServer((req, res) => {
         restoredAfterwards: restored.valid,
         chainStillIntact: engine.verifyChain(CASE_ID).valid,
         whatHappened:
-          'Se alterÃ³ un byte del archivo sellado. El hash dejÃ³ de coincidir con el nombre del ' +
-          'archivo, y el motor lo detectÃ³. DespuÃ©s se restaurÃ³ el archivo y la verificaciÃ³n volviÃ³ ' +
-          'a pasar. El evento de detecciÃ³n quedÃ³ registrado en la cadena de auditorÃ­a.'
+          'Se alteró un byte del archivo sellado. El hash dejó de coincidir con el nombre del ' +
+          'archivo, y el motor lo detectó. Después se restauró el archivo y la verificación volvió ' +
+          'a pasar. El evento de detección quedó registrado en la cadena de auditoría.'
+      });
+      return;
+    }
+
+    // Invocación dinámica en vivo a Foxit APIs
+    if (pathname === '/api/test-foxit' && req.method === 'POST') {
+      let body = '';
+      req.on('data', chunk => { body += chunk; });
+      req.on('end', async () => {
+        try {
+          const payload = JSON.parse(body || '{}');
+          const testClientId = payload.clientId || env.FOXIT_CLIENT_ID;
+          const testClientSecret = payload.clientSecret || env.FOXIT_CLIENT_SECRET;
+          const service = payload.service || 'docgen';
+          const baseUrl = payload.baseUrl || env.FOXIT_BASE_URL || 'https://na1.fusion.foxit.com';
+
+          if (service === 'docgen') {
+            const templatePath = path.join(__dirname, 'plantilla_acta_policial.docx');
+            if (!fs.existsSync(templatePath)) {
+              sendJson(res, 400, { ok: false, error: 'No se encontró plantilla_acta_policial.docx' });
+              return;
+            }
+            const t0 = Date.now();
+            const r = await fetch(`${baseUrl}/document-generation/api/GenerateDocumentBase64`, {
+              method: 'POST',
+              headers: {
+                client_id: testClientId,
+                client_secret: testClientSecret,
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                base64FileString: fs.readFileSync(templatePath).toString('base64'),
+                documentValues: {
+                  carpeta_fiscal: payload.caseNumber || 'EXP-2026-LIVE-TEST',
+                  delito: 'Hurto Agravado (Art. 186 CP)',
+                  fecha_intervencion: new Date().toLocaleDateString('es-PE'),
+                  hora_intervencion: new Date().toLocaleTimeString('es-PE'),
+                  lugar_intervencion: 'Av. Alfonso Ugarte cuadra 8, Lima',
+                  placa_vehiculo: 'ABC-124'
+                },
+                outputFormat: 'pdf'
+              })
+            });
+            const durationMs = Date.now() - t0;
+            const text = await r.text();
+            if (!r.ok) {
+              sendJson(res, 200, { ok: false, status: r.status, durationMs, error: text.slice(0, 500) });
+              return;
+            }
+            const j = JSON.parse(text);
+            const pdfBuf = Buffer.from(j.base64FileString, 'base64');
+            const sha = crypto.createHash('sha256').update(pdfBuf).digest('hex');
+            sendJson(res, 200, {
+              ok: true,
+              status: 200,
+              durationMs,
+              bytes: pdfBuf.length,
+              sha256: sha,
+              message: 'PDF generado exitosamente con Foxit Document Generation API',
+              base64Snippet: j.base64FileString.slice(0, 80) + '...'
+            });
+            return;
+          } else if (service === 'esign') {
+            const esignBase = payload.esignBase || env.FOXIT_ESIGN_BASE_URL || 'https://na1.foxitesign.foxit.com/api';
+            const t0 = Date.now();
+            const r = await fetch(`${esignBase}/oauth2/access_token`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+              body: new URLSearchParams({
+                client_id: testClientId,
+                client_secret: testClientSecret,
+                grant_type: 'client_credentials'
+              })
+            });
+            const durationMs = Date.now() - t0;
+            const text = await r.text();
+            sendJson(res, 200, {
+              ok: r.ok,
+              status: r.status,
+              durationMs,
+              rawResponse: text,
+              requiresCommercialPlan: text.includes('invalid_client'),
+              explanation: 'Foxit eSign requiere activación de plan comercial en developer-api.foxit.com/esign'
+            });
+            return;
+          } else {
+            sendJson(res, 400, { error: 'Servicio no soportado: ' + service });
+            return;
+          }
+        } catch (e) {
+          sendJson(res, 500, { ok: false, error: e.message });
+        }
       });
       return;
     }
