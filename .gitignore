@@ -25,6 +25,12 @@ node_modules/
 .DS_Store
 Thumbs.db
 *.log
+*.aux
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
 DIAG_*.pdf
 pitch_frames/
 demo_capture_temp/
